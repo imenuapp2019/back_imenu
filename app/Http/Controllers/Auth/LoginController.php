@@ -41,7 +41,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function loginAPI(Request $request)
     {
         $user = User::find($request->email);
         if (Hash::check($request->password, $user->password)) {

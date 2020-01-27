@@ -27,7 +27,7 @@ Route::middleware('auth:api')->put('user/modify/{id}', 'UserController@update');
 //Delete user//
 Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete');
 
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/loginApi', 'Auth\LoginController@loginAPI');
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
