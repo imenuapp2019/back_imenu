@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/password.email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');

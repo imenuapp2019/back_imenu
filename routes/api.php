@@ -51,4 +51,3 @@ Route::post('restaurantes/create', 'RestauranteController@create');
 Route::delete('restaurantes/delete/{id}', 'RestauranteController@delete');
 //Update restaurante
 Route::put('restaurantes/update/{id}', 'RestauranteController@update');
-
