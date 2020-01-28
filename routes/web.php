@@ -19,4 +19,4 @@ Auth::routes();
 //Ruta para devolver la vista Home desde web
 Route::get('home', 'HomeController@index');
 //Ruta para actualizar los datos de un restaurante
-Route::middleware('auth')->get('restaurantupdate', 'RestUpdateViewController@index');
+Route::middleware('auth')->get('restaurantupdate/{id}', 'RestUpdateViewController@index');
