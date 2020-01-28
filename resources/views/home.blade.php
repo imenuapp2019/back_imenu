@@ -13,7 +13,7 @@
             <div class="list-group">
                 @foreach($restaurants as $rest)
                     <div class="list-group-item list-group-item-action list-group-item-secondary d-flex flex-row justify-content-between">
-                        <div style="overflow-x:auto">{{$rest->name}}</div>
+                        <h4 style="overflow-x:auto">{{$rest->name}}</h4>
                         <div class="btn-group ">
                             <button type="button" class="btn btn-default bg-primary"><a href=""><img src="{{asset('images/eye.png')}}" alt="Error"></a></button>
                             <button type="button" class="btn btn-default bg-info"><a href=""><img src="{{asset('images/edit.png')}}" alt="Error"></a></button>
