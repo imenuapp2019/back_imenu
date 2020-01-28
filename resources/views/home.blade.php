@@ -16,7 +16,7 @@
                         <h4 style="overflow-x:auto">{{$rest->name}}</h4>
                         <div class="btn-group ">
                             <button type="button" class="btn btn-default bg-primary"><a href=""><img src="{{asset('images/eye.png')}}" alt="Error"></a></button>
-                            <button type="button" class="btn btn-default bg-info"><a href=""><img src="{{asset('images/edit.png')}}" alt="Error"></a></button>
+                        <button type="button" class="btn btn-default bg-info"><a href="{{ url('restaurantupdate') }}"><img src="{{asset('images/edit.png')}}" alt="Error"></a></button>
                             <button type="button" class="btn btn-default bg-danger"><img src="{{asset('images/bin.png')}}" alt="Error"></button>
                         </div>
                     </div>
