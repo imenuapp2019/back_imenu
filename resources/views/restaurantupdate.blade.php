@@ -10,6 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <form action="{{ action('RestauranteController@update', ['id' => $restaurants->id, 'api' => false]) }}" method="POST" class="needs-validation" novalidate>
+                @csrf
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="{{$restaurants->name}}">

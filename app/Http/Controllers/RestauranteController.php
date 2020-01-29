@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class RestauranteController extends Controller
 {
-    public function create (Request $request, $api = true){
+    public function create (Request $request){
         $response = array('error_code' => 400, 'error_msg' => 'Error inserting info');
         $restaurante = new Restaurante();
 
@@ -55,13 +55,7 @@ class RestauranteController extends Controller
             }
 
         }
-        if ($api) {
-            return response()->json($response);
-        }else {
-            Log::critical('response de metodo post restaurante, message: '.$response);
-            return view('home');
-        }
-
+        return view('home');
     }
 
     public function delete($id){

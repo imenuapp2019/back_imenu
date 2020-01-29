@@ -54,12 +54,6 @@ Route::get('enviar', ['as' => 'enviar', function () {
 
     return "Se envío el email";
 }]);
-//Create restaurante
-Route::middleware('auth:api')->post('restaurantes/create', 'RestauranteController@create');
-//Delete restaurante
-Route::middleware('auth:api')->delete('restaurantes/delete/{id}', 'RestauranteController@delete');
-//Update restaurante
-Route::middleware('auth:api')->match(['put', 'post'], 'restaurantes/update/{id}', 'RestauranteController@update');
 //Get datos del home
 Route::get('homeRestaurante', 'RestauranteController@home');
 //Get datos del restaurante
