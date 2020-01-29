@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/formulario', 'ControllerFormularioResrtaurante@callController');
+Route::post('/formulariocompleto', 'ControllerFormularioResrtaurante@sendData');
