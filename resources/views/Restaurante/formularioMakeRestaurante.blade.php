@@ -8,12 +8,12 @@
 </head>
 <body>
 
-<form>
+<form method="POST" action = "{{action('ControllerFormularioResrtaurante@callController')}} ">
 
-   <p>Nombre: <input type = "text"/>  </p>
-   <p>Dirección: <input type = "text"/>  </p>
-   <p>Latitud: <input type = "text"/>  </p>
-   <p>Longitud: <input type = "text"/>  </p>
+   <p>Nombre: <input type = "text" id = "nombre" required/>  </p>
+   <p>Dirección: <input type = "text" id = "direccion" required/>  </p>
+   <p>Latitud: <input type = "text" id = "latitud" required/>  </p>
+   <p>Longitud: <input type = "text" id="longitud" required/>  </p>
 
     <p>Tipo de comida:</p>
    <select name="Tipo de comida">
@@ -23,7 +23,7 @@
     <option value="Arabe">Arabe</option>
   </select>
   <br><br>
-  <input type="submit">
+  <input type="submit" id = "enviar ">
 
 
 

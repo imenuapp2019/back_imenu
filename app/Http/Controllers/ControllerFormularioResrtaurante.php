@@ -12,4 +12,10 @@ class ControllerFormularioResrtaurante extends Controller
 
 
    }
+
+   public function sendData() {
+
+
+
+   }
 }
