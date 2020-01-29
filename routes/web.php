@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('home', 'HomeController@index');
 //Ruta para actualizar los datos de un restaurante
 Route::middleware('auth')->get('restaurantupdate/{id}', 'RestUpdateViewController@index');
+
+Route::get('/formulario', 'ControllerFormularioResrtaurante@callController');
