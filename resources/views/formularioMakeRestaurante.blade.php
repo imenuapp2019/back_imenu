@@ -8,21 +8,23 @@
 </head>
 <body>
 
-<form method="POST" action = "{{action('ControllerFormularioResrtaurante@callController')}} ">
-
-   <p>Nombre: <input type = "text" id = "nombre" required/>  </p>
-   <p>Dirección: <input type = "text" id = "direccion" required/>  </p>
-   <p>Latitud: <input type = "text" id = "latitud" required/>  </p>
-   <p>Longitud: <input type = "text" id="longitud" required/>  </p>
+<form method="POST" action = "{{action('RestauranteController@create')}} ">
+  @csrf
+   <p>Nombre: <input type = "text" id = "nombre" name = "name" required/>  </p>
+   <p>Dirección: <input type = "text" id = "direccion" name = "adress" required/>  </p>
+   <p>Latitud: <input type = "text" id = "latitud" name = "latitude" required/>  </p>
+   <p>Longitud: <input type = "text" id="longitud" name = "longitude" required/>  </p>
+   <p>Número de teléfono: <input type = "number" id = "phone" name = "phone_number" required/> </p>
 
     <p>Tipo de comida:</p>
-   <select name="Tipo de comida">
+   <select name="tipo_id">
     <option value="Mexicano">Mexicano</option>
     <option value="Chino">Chino</option>
     <option value="vegetariano">Vegetariano</option>
     <option value="Arabe">Arabe</option>
   </select>
   <br><br>
+
   <input type="submit" id = "enviar ">
 
 
