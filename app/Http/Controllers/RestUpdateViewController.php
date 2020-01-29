@@ -11,6 +11,6 @@ class RestUpdateViewController extends Controller
     public function index($id){
         $data = Restaurante::find($id);
         $foodtype = Tipo::all();
-        return view('restaurantupdate', ['restaurants'=>$data, 'type'=>$foodtype]);
+        return view('restaurantupdate', ['restaurants'=>$data, 'type'=>$foodtype, 'change'=>false]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Restaurante;
+use App\Tipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -76,7 +77,7 @@ class RestauranteController extends Controller
         return response()->json($response);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id, $api){
         $response = array('error_code' => 404, 'error_msg' => 'Restaurant '.$id.' not found');
         $restaurante = Restaurante::find($id);
 
@@ -98,7 +99,14 @@ class RestauranteController extends Controller
 
             }
         }
-        return response()->json($response);
+        if ($api) {
+            return response()->json($response);
+        }else {
+            Log::critical('Function: Update Restaurante, Message: '.$response);
+            $foodtype = Tipo::all();
+            return view('restaurantupdate', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true]);
+        }
+
     }
 
     public function home(){
@@ -116,6 +124,17 @@ class RestauranteController extends Controller
             ->select('r.id', 'r.name', 't.name as type', 'i.URL as image_URL', 'r.phone_number', 'r.address', 'r.latitude', 'r.longitude')
             ->join('tipos as t', 'r.tipo_id', '=', 't.id')
             ->leftJoin('imagen_restaurantes as i', 'r.id', '=', 'i.restaurante_id')
+            ->get();
+
+        return response()->json($restaurante);
+    }
+
+    public function search(Request $request){
+        $restaurante = DB::table('restaurantes as r')
+            ->select('r.name', 't.name as type', 'i.URL as image_URL', 'r.latitude', 'r.longitude')
+            ->join('tipos as t', 'r.tipo_id', '=', 't.id')
+            ->leftJoin('imagen_restaurantes as i', 'i.restaurante_id', '=', 'r.id')
+            ->where('r.name', 'LIKE', '%'.$request->name.'%')
             ->get();
 
         return response()->json($restaurante);

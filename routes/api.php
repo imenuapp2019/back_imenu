@@ -59,11 +59,13 @@ Route::middleware('auth:api')->post('restaurantes/create', 'RestauranteControlle
 //Delete restaurante
 Route::middleware('auth:api')->delete('restaurantes/delete/{id}', 'RestauranteController@delete');
 //Update restaurante
-Route::middleware('auth:api')->put('restaurantes/update/{id}', 'RestauranteController@update');
+Route::middleware('auth:api')->match(['put', 'post'], 'restaurantes/update/{id}', 'RestauranteController@update');
 //Get datos del home
 Route::get('homeRestaurante', 'RestauranteController@home');
 //Get datos del restaurante
 Route::get('restaurante', 'RestauranteController@returnAll');
+//Get buscador de restaurante
+Route::get('restaurantes/search', 'RestauranteController@search');
 
 //Get tipo
 Route::middleware('auth:api')->get('tipo', 'TipoController@getAll');
