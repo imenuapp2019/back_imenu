@@ -65,7 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return array
      */
-    protected function create(Request $data)
+    protected function create(Request $data, $api = true)
     {
         $status = array('error_code'=>400,'user'=>'');
         $user = User::find($data->email);
@@ -81,11 +81,16 @@ class RegisterController extends Controller
                 'email' => $data->email,
                 'password' => Hash::make($data->password),
                 'api_token' => bcrypt(Str::random(25)),
-                'avatar_id' => $data->avatar_id,
+                'avatar_id' => (int)$data->avatar_id,
             ]);
             $status['error_code'] = 200;
            $status['user']= $user;
         }
-        return $status;
+        if ($api) {
+            return response()->json($status);
+        }else {
+            $foodtype = User::all();
+            return view('login');
+        }
     }
 }

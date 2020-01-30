@@ -44,10 +44,22 @@ Route::get('enviar', ['as' => 'enviar', function () {
 
     return "Se envío el email";
 }]);
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //Create restaurante
 Route::post('restaurantes/create', 'RestauranteController@create');
 //Delete restaurante
 Route::delete('restaurantes/delete/{id}', 'RestauranteController@delete');
 //Update restaurante
 Route::put('restaurantes/update/{id}', 'RestauranteController@update');
+
+//Route::group(['middleware' => ['auth:api']], function() {
+//    Route::get('/', function(){
+ //       return response('Hello World', 200)
+   //     ->header('Content-Type', 'text/plain');
+   // });
+   // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
+
+    //Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
+//});
