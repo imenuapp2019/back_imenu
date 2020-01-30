@@ -1,38 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Formulario Restaurante</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<form method="POST" action = "{{action('RestauranteController@create')}} ">
-  @csrf
-   <p>Nombre: <input type = "text" id = "nombre" name = "name" required/>  </p>
-   <p>Dirección: <input type = "text" id = "direccion" name = "adress" required/>  </p>
-   <p>Latitud: <input type = "text" id = "latitud" name = "latitude" required/>  </p>
-   <p>Longitud: <input type = "text" id="longitud" name = "longitude" required/>  </p>
-   <p>Número de teléfono: <input type = "number" id = "phone" name = "phone_number" required/> </p>
-
-    <p>Tipo de comida:</p>
-   <select name="tipo_id">
-    <option value="Mexicano">Mexicano</option>
-    <option value="Chino">Chino</option>
-    <option value="vegetariano">Vegetariano</option>
-    <option value="Arabe">Arabe</option>
-  </select>
-  <br><br>
-
-  <input type="submit" id = "enviar ">
-
-
-
-
-
-</form>
-
-
-</body>
-</html>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" action = "{{ action('RestauranteController@create')}}" class="needs-validation" novalidate>
+            @csrf
+            <div class="form-group">
+                    <div class="form-check">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label for="add">Address:</label>
+                        <input type="text" class="form-control" id="add" placeholder="Enter address" name="address" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label for="ltt">Latitude:</label>
+                        <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label for="lgt">Longitude:</label>
+                        <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label for="pn">Phone number:</label>
+                        <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label for="ft">Food type:</label>
+                        <select class="form-control" id="ft" name="tipo_id">
+                            <option value="1">Japonesa</option>
+                            <option value="2">Chino</option>
+                            <option value="3">Italiana</option>
+                            <option value="4">Vegana</option>
+                            <option value="5">Arabe</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" value="submit" class="btn btn-primary">Sent</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

@@ -27,7 +27,7 @@ Route::middleware('auth:api')->put('user/modify/{id}', 'UserController@update');
 //Delete user//
 Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete');
 
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/loginApi', 'Auth\LoginController@loginAPI');
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
@@ -54,16 +54,12 @@ Route::get('enviar', ['as' => 'enviar', function () {
 
     return "Se envío el email";
 }]);
-//Create restaurante
-Route::middleware('auth:api')->post('restaurantes/create', 'RestauranteController@create');
-//Delete restaurante
-Route::middleware('auth:api')->delete('restaurantes/delete/{id}', 'RestauranteController@delete');
-//Update restaurante
-Route::middleware('auth:api')->put('restaurantes/update/{id}', 'RestauranteController@update');
 //Get datos del home
 Route::get('homeRestaurante', 'RestauranteController@home');
 //Get datos del restaurante
 Route::get('restaurante', 'RestauranteController@returnAll');
+//Get buscador de restaurante
+Route::get('restaurantes/search', 'RestauranteController@search');
 
 //Get tipo
 Route::middleware('auth:api')->get('tipo', 'TipoController@getAll');
