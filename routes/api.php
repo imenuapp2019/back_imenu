@@ -30,7 +30,7 @@ Route::post('/login', 'Auth\LoginController@login');
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-Route::get('enviar', ['as' => 'enviar', function () {
+/*Route::get('enviar', ['as' => 'enviar', function () {
 
     $data = ['link' => 'https://cev.com,'];
 
@@ -43,10 +43,10 @@ Route::get('enviar', ['as' => 'enviar', function () {
     });
 
     return "Se envío el email";
-}]);
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+}]); */
+/* Route::get('password/reset/', 'Auth\ResetPasswordController@showResetForm');
 
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset'); */
 //Create restaurante
 Route::post('restaurantes/create', 'RestauranteController@create');
 //Delete restaurante
