@@ -55,7 +55,8 @@ class RestauranteController extends Controller
             }
 
         }
-        return view('home');
+        Log::critical('Function: Create Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        return redirect()->route('home');
     }
 
     public function delete($id){
@@ -74,10 +75,11 @@ class RestauranteController extends Controller
 
             }
         }
-        return response()->json($response);
+        Log::critical('Function: Delete Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        return redirect()->route('home');
     }
 
-    public function update(Request $request, $id, $api){
+    public function update(Request $request, $id){
         $response = array('error_code' => 404, 'error_msg' => 'Restaurant '.$id.' not found');
         $restaurante = Restaurante::find($id);
 
@@ -99,14 +101,9 @@ class RestauranteController extends Controller
 
             }
         }
-        if ($api) {
-            return response()->json($response);
-        }else {
-            Log::critical('Function: Update Restaurante, Message: '.$response);
-            $foodtype = Tipo::all();
-            return view('restaurantupdate', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true]);
-        }
-
+        Log::critical('Function: Update Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        $foodtype = Tipo::all();
+        return redirect()->route('update', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true]);
     }
 
     public function home(){

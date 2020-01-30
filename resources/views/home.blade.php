@@ -15,9 +15,9 @@
                     <div class="list-group-item list-group-item-action list-group-item-secondary d-flex flex-row justify-content-between">
                         <h4 style="overflow-x:auto">{{$rest->name}}</h4>
                         <div class="btn-group ">
-                            <button type="button" class="btn btn-default bg-primary"><a href="{{ url("")}}"><img src="{{asset('images/eye.png')}}" alt="Error"></a></button>
+                            {{--<button type="button" class="btn btn-default bg-primary"><a href="{{ url("")}}"><img src="{{asset('images/eye.png')}}" alt="Error"></a></button>--}}
                             <button type="button" class="btn btn-default bg-info"><a href="{{ url("updateRestaurante/$rest->id") }}"><img src="{{asset('images/edit.png')}}" alt="Error"></a></button>
-                            <button type="button" class="btn btn-default bg-danger"><img src="{{asset('images/bin.png')}}" alt="Error"></button>
+                            {{--<button type="button" class="btn btn-default bg-danger"><a href="{{ url("restaurantes/delete/$rest->id")}}"><img src="{{asset('images/bin.png')}}" alt="Error"></a></button>--}}
                         </div>
                     </div>
                 @endforeach

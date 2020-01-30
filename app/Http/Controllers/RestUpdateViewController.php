@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 
 class RestUpdateViewController extends Controller
 {
-    public function index($id){
+    public function index(Request $request, $id){
+        $change = false;
         $data = Restaurante::find($id);
         $foodtype = Tipo::all();
-        return view('restaurantupdate', ['restaurants'=>$data, 'type'=>$foodtype, 'change'=>false]);
+        if (isset($request->change)) {
+            $change = $request->change;
+        }
+        return view('restaurantupdate', ['restaurants'=>$data, 'type'=>$foodtype, 'change'=>$change]);
     }
 }
