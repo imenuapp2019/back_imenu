@@ -21,6 +21,11 @@ Route::post('register', 'Auth\RegisterController@create');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+<<<<<<< HEAD
 Route::post('/password.email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+=======
+Route::get('/formulario', 'ControllerFormularioResrtaurante@callController');
+
+>>>>>>> ed92335d46682d29d54da03af54b9baf194ec711

@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Restaurante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class RestauranteController extends Controller
 {
-    public function create (Request $request){
+    public function create (Request $request, $api = true){
         $response = array('error_code' => 400, 'error_msg' => 'Error inserting info');
         $restaurante = new Restaurante();
 
@@ -43,16 +44,23 @@ class RestauranteController extends Controller
                 $restaurante->tipo_id = $request->tipo_id;
                 $restaurante->save();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
+                Log::info('Restaurant '.$restaurante->name.' create');
 
             } catch (\Exception $e) {
 
-                Log::alert('Function: create Restaurante, Message: '.$e);
+                Log::alert('Function: Create Restaurante, Message: '.$e);
                 $response = array('error_code' => 500, 'error_msg' => "Server connection error");
 
             }
 
         }
-        return response()->json($response);
+        if ($api) {
+            return response()->json($response);
+        }else {
+            Log::critical('response de metodo post restaurante, message: '.$response);
+            return view('home');
+        }
+
     }
 
     public function delete($id){
@@ -63,6 +71,7 @@ class RestauranteController extends Controller
             try {
                 $restaurante->delete();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
+                Log::info('Restaurant delete');
 
             } catch (\Exception $e) {
                 Log::alert('Function: Delete Restaurante, Message: '.$e);
@@ -87,13 +96,35 @@ class RestauranteController extends Controller
                 $restaurante->tipo_id = $request->tipo_id ? $request->tipo_id : $restaurante->tipo_id;
                 $restaurante->save();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
+                Log::info('Restaurant '.$restaurante->name.' update');
 
             } catch (\Exception $e) {
                 Log::alert('Function: Update Restaurante, Message: '.$e);
                 $response = array('error_code' => 500, 'error_msg' => "Server connection error");
+
             }
         }
         return response()->json($response);
+    }
+
+    public function home(){
+        $restaurante = DB::table('restaurantes as r')
+            ->select('r.name', 't.name as type', 'i.URL as image_URL', 'r.latitude', 'r.longitude')
+            ->join('tipos as t', 'r.tipo_id', '=', 't.id')
+            ->leftJoin('imagen_restaurantes as i', 'i.restaurante_id', '=', 'r.id')
+            ->get();
+
+        return response()->json($restaurante);
+    }
+
+    public function returnAll(){
+        $restaurante = DB::table('restaurantes as r')
+            ->select('r.id', 'r.name', 't.name as type', 'i.URL as image_URL', 'r.phone_number', 'r.address', 'r.latitude', 'r.longitude')
+            ->join('tipos as t', 'r.tipo_id', '=', 't.id')
+            ->leftJoin('imagen_restaurantes as i', 'r.id', '=', 'i.restaurante_id')
+            ->get();
+
+        return response()->json($restaurante);
     }
 
 }
