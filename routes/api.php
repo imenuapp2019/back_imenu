@@ -29,60 +29,17 @@ Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete
 
 Route::post('/login', 'Auth\LoginController@login');
 
+//Resetear eñ correo recibe un Json
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-<<<<<<< HEAD
-/*Route::get('enviar', ['as' => 'enviar', function () {
-=======
-//Mostrar tipos de comida
-Route::get('tipo', 'TipoController@listarTipos');
-//Crear nuevo tipo
-Route::post('tipo/create', 'TipoController@anadirTipos');
-//Borrar un tipo de comida
-Route::delete('tipo/delete/{id}', 'TipoController@borrarTipos');
-//Editar un tipo de comida
-Route::put('tipo/update/{id}', 'TipoController@modificarTipos');
-
-Route::get('enviar', ['as' => 'enviar', function () {
->>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
-
-    $data = ['link' => 'https://cev.com,'];
-
-    \Mail::send('emails.notificacion', $data, function ($message) {
-
-        $message->from('email@cev.com', 'cev.com');
-
-        $message->to('user@example.com')->subject('Notificación');
-
-    });
-
-    return "Se envío el email";
-<<<<<<< HEAD
-}]); */
-/* Route::get('password/reset/', 'Auth\ResetPasswordController@showResetForm');
-
-Route::post('password/reset', 'Auth\ResetPasswordController@reset'); */
-=======
-}]);
->>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
 //Create restaurante
 Route::middleware('auth:api')->post('restaurantes/create', 'RestauranteController@create');
 //Delete restaurante
 Route::middleware('auth:api')->delete('restaurantes/delete/{id}', 'RestauranteController@delete');
 //Update restaurante
-<<<<<<< HEAD
 Route::put('restaurantes/update/{id}', 'RestauranteController@update');
 
-//Route::group(['middleware' => ['auth:api']], function() {
-//    Route::get('/', function(){
- //       return response('Hello World', 200)
-   //     ->header('Content-Type', 'text/plain');
-   // });
-   // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 
-    //Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
-//});
-=======
 Route::middleware('auth:api')->put('restaurantes/update/{id}', 'RestauranteController@update');
 //Get datos del home
 Route::get('homeRestaurante', 'RestauranteController@home');
@@ -104,4 +61,4 @@ Route::middleware('auth:api')->post('imagenRestaurante/create', 'ImagenRestauran
 Route::middleware('auth:api')->delete('imagenRestaurante/delete/{id}', 'ImagenRestauranteController@delete');
 //Update imagen restaurante
 Route::middleware('auth:api')->put('imagenRestaurante/update/{id}', 'ImagenRestauranteController@update');
->>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
+
