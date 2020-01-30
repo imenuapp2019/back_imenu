@@ -29,3 +29,8 @@ Route::middleware('auth')->post('restaurantes/create', 'RestauranteController@cr
 Route::middleware('auth')->delete('restaurantes/delete/{id}', 'RestauranteController@delete')->name('delete');
 //Update restaurante
 Route::middleware('auth')->match(['put', 'post'], 'restaurantes/update/{id}', 'RestauranteController@update');
+Route::post('register', 'Auth\RegisterController@create');
+
+Route::post('/password.email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');

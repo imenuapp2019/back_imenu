@@ -1615,6 +1615,18 @@
         },
         {
             "name": "symfony/css-selector",
+<<<<<<< HEAD
+            "version": "v4.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "a167b1860995b926d279f9bb538f873e3bfa3465"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/a167b1860995b926d279f9bb538f873e3bfa3465",
+                "reference": "a167b1860995b926d279f9bb538f873e3bfa3465",
+=======
             "version": "v5.0.3",
             "source": {
                 "type": "git",
@@ -1625,6 +1637,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/css-selector/zipball/ff60c90cb7950b592ebc84ad1289d0345bf24f9f",
                 "reference": "ff60c90cb7950b592ebc84ad1289d0345bf24f9f",
+>>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
                 "shasum": ""
             },
             "require": {
@@ -1664,7 +1677,11 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+            "time": "2020-01-04T13:00:46+00:00"
+=======
             "time": "2020-01-04T14:08:26+00:00"
+>>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
         },
         {
             "name": "symfony/debug",
@@ -2160,7 +2177,11 @@
                 "mime",
                 "mime-type"
             ],
+<<<<<<< HEAD
+            "time": "2020-01-04T13:00:46+00:00"
+=======
             "time": "2020-01-04T14:08:26+00:00"
+>>>>>>> ed92335d46682d29d54da03af54b9baf194ec711
         },
         {
             "name": "symfony/polyfill-ctype",

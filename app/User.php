@@ -20,6 +20,7 @@ class User extends Authenticatable
     ];
 
     protected $primaryKey = 'email';
+    protected $keyType = 'string';
 
     /**
      * The attributes that should be hidden for arrays.

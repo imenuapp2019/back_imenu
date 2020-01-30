@@ -29,6 +29,7 @@ Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete
 
 Route::post('/loginApi', 'Auth\LoginController@loginAPI');
 
+//Resetear eñ correo recibe un Json
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 //Mostrar tipos de comida
@@ -76,3 +77,4 @@ Route::middleware('auth:api')->post('imagenRestaurante/create', 'ImagenRestauran
 Route::middleware('auth:api')->delete('imagenRestaurante/delete/{id}', 'ImagenRestauranteController@delete');
 //Update imagen restaurante
 Route::middleware('auth:api')->put('imagenRestaurante/update/{id}', 'ImagenRestauranteController@update');
+
