@@ -46,6 +46,17 @@
                         <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
                 </div>
+                <div class="container">
+                    <div class="form-group">
+                        <label for="banner">Banner:</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" accept=".jpg,.png,.jpeg,.gif" class="custom-file-input" id="banner">
+                                <label class="custom-file-label" for="banner">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="ft">Food type:</label>
@@ -64,3 +75,12 @@
     </div>
 </div>
 @endsection
+
+<script>
+    debugger
+    $(".banner").change(function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+    });
+</script>

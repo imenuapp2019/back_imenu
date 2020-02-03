@@ -72,18 +72,15 @@
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
+                        {{--@if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif--}}
                     @endauth
                 </div>
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    iMenu
-                </div>
-
+                <img src="{{asset('images/LogoIMenu.png')}}" alt="">
             </div>
         </div>
     </body>
