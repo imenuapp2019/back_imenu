@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form method="POST" action = "{{ action('RestauranteController@create')}}" class="needs-validation" novalidate>
+            <form method="POST" action = "{{ action('RestauranteController@create')}}" class="needs-validation">
             @csrf
             <div class="form-group">
                     <div class="form-check">
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <div class="form-check">
                         <label for="ltt">Latitude:</label>
-                        <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" required>
+                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Enter latitude" name="latitude" required>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <div class="form-check">
                         <label for="lgt">Longitude:</label>
-                        <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" required>
+                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Enter longitude" name="longitude" required>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
@@ -51,7 +51,7 @@
                         <label for="banner">Banner:</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" accept=".jpg,.png,.jpeg,.gif" class="custom-file-input" id="banner">
+                                <input type="file" accept=".jpg,.png,.jpeg,.gif" class="custom-file-input" id="banner" multiple>
                                 <label class="custom-file-label" for="banner">Choose file</label>
                             </div>
                         </div>
@@ -70,17 +70,13 @@
                     </div>
                 </div>
                 <button type="submit" value="submit" class="btn btn-primary">Sent</button>
+                <button type="button" class="btn btn-primary"><a style="text-decoration:none" class="text-white" href="{{ url("home")}}">Home</a></button>
             </form>
         </div>
     </div>
 </div>
 @endsection
+@section('script')
+    <script src="{{ asset('js/input-file.js') }}" defer></script>
+@endsection
 
-<script>
-    debugger
-    $(".banner").change(function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-
-    });
-</script>
