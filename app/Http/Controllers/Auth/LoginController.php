@@ -43,6 +43,7 @@ class LoginController extends Controller
 
     public function loginAPI(Request $request)
     {
+        $loginUser['serverRequest']= 404;
         $user = User::find($request->email);
         if (Hash::check($request->password, $user->password)) {
             $loginUser = [
@@ -57,6 +58,7 @@ class LoginController extends Controller
         }else{
             $loginUser['serverRequest']= 403;
         }
-            return response()->json($loginUser);
+        return response()->json($loginUser);
+
     }
 }

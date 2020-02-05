@@ -44,6 +44,16 @@ class RestauranteController extends Controller
                 $restaurante->phone_number = $request->phone_number;
                 $restaurante->tipo_id = $request->tipo_id;
                 $restaurante->save();
+
+                if (isset($request->images)) {
+                    Log::emergency('ha entrado 1');
+                    foreach ($request->images as $image) {
+                        Log::emergency('ha entrado 2');
+                        redirect()->action('${App\Http\Controllers\ImagenRestauranteController@create}', ['restaurante_id' => $restaurante->id, 'URL' => $image]);
+                    }
+                }else {
+                    Log::emergency('No ha entrado');
+                }
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant '.$restaurante->name.' create');
 

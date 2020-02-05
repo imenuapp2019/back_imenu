@@ -9,41 +9,31 @@
             <div class="form-group">
                     <div class="form-check">
                         <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Please fill out this field.</div>
+                        <input type="text" class="form-control" id="name" placeholder="Ej: La pequeña plza" name="name" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="add">Address:</label>
-                        <input type="text" class="form-control" id="add" placeholder="Enter address" name="address" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Please fill out this field.</div>
+                        <input type="text" class="form-control" id="add" placeholder="Ej: Calle spagueto" name="address" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="ltt">Latitude:</label>
-                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Enter latitude" name="latitude" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Please fill out this field.</div>
+                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Ej: 123.4567" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="lgt">Longitude:</label>
-                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Enter longitude" name="longitude" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Please fill out this field.</div>
+                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="pn">Phone number:</label>
-                        <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" required>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Please fill out this field.</div>
+                        <input type="text" class="form-control" id="pn" placeholder="Ej: 684305799" name="phone_number" pattern="[0-9]{9}" required>
                     </div>
                 </div>
                 <div class="container">
@@ -51,7 +41,7 @@
                         <label for="banner">Banner:</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" accept=".jpg,.png,.jpeg,.gif" class="custom-file-input" id="banner" multiple>
+                                <input type="file" accept=".jpg,.png,.jpeg" class="custom-file-input" name="images[]" id="banner" multiple>
                                 <label class="custom-file-label" for="banner">Choose file</label>
                             </div>
                         </div>
