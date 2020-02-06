@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form method="POST" action = "{{ action('RestauranteController@create')}}" class="needs-validation">
+            <form method="POST" action = "{{ action('RestauranteController@create')}}" class="needs-validation" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                     <div class="form-check">

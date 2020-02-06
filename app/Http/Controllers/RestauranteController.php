@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImagenRestaurante;
 use App\Restaurante;
 use App\Tipo;
 use Illuminate\Http\Request;
@@ -46,13 +47,11 @@ class RestauranteController extends Controller
                 $restaurante->save();
 
                 if (isset($request->images)) {
-                    Log::emergency('ha entrado 1');
                     foreach ($request->images as $image) {
-                        Log::emergency('ha entrado 2');
-                        redirect()->action('${App\Http\Controllers\ImagenRestauranteController@create}', ['restaurante_id' => $restaurante->id, 'URL' => $image]);
+                        app(ImagenRestauranteController::class)->create($restaurante->id, $image);
                     }
                 }else {
-                    Log::emergency('No ha entrado');
+                    Log::info('Sin imagenes');
                 }
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant '.$restaurante->name.' create');
@@ -65,7 +64,7 @@ class RestauranteController extends Controller
             }
 
         }
-        Log::critical('Function: Create Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        Log::critical('Function: Create Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
         return redirect()->route('home');
     }
 
@@ -85,7 +84,7 @@ class RestauranteController extends Controller
 
             }
         }
-        Log::critical('Function: Delete Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        Log::critical('Function: Delete Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
         return redirect()->route('home');
     }
 
@@ -111,9 +110,11 @@ class RestauranteController extends Controller
 
             }
         }
-        Log::critical('Function: Update Restaurante, Code: '.$response['error_code'].'Message: '.$response['error_msg']);
+        Log::critical('Function: Update Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
         $foodtype = Tipo::all();
-        return redirect()->route('update', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true]);
+        $images = ImagenRestaurante::all()
+            ->where('restaurante_id', $id);
+        return redirect()->route('update', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true, 'images'=>$images]);
     }
 
     public function home(){
