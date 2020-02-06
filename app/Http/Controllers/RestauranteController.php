@@ -137,7 +137,7 @@ class RestauranteController extends Controller
         return response()->json($restaurante);
     }
 
-   public function showRestaurant($id) {
+   public function showRestaurant( Request $request, $id) {
 
     $response = array('error_code' => 404, 'error_msg' => 'Restaurant' .$id. 'not found');
     $restaurante = Restaurante::find($id);
