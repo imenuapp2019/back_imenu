@@ -57,8 +57,8 @@
                     </div>
                     <div class="form-group">
                         <div class="form-check">
-                            <img src="http://localhost:8888/TFG/Imenu/storage/app/ImgRestaurantes/Gqmp88nCvPiO37dph03jjJ7ZfTHhpGPi0GPd7haY.png" alt="Error">
                             @forelse ($images as $image)
+                                <img src="/storage/{{$image->URL}}" alt="">
                             @empty
                                 <div class="alert alert-primary" role="alert">
                                     No images aviable.

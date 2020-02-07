@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ImagenRestaurante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ImagenRestauranteController extends Controller
 {
@@ -64,6 +65,7 @@ class ImagenRestauranteController extends Controller
 
         if (!empty($imagen)) {
             try {
+                //Storage::delete($imagen->URL);
                 $imagen->delete();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Image delete');
