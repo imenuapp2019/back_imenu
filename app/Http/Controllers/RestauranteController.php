@@ -101,6 +101,23 @@ class RestauranteController extends Controller
                 $restaurante->phone_number = $request->phone_number ? $request->phone_number : $restaurante->phone_number;
                 $restaurante->tipo_id = $request->tipo_id ? $request->tipo_id : $restaurante->tipo_id;
                 $restaurante->save();
+
+                if (isset($request->deleteImages)) {
+                    foreach ($request->deleteImages as $image) {
+                        app(ImagenRestauranteController::class)->delete($image);
+                    }
+                } else {
+                    Log::info('Sin imagenes');
+                }
+
+                if (isset($request->images)) {
+                    foreach ($request->images as $imagen) {
+                        app(ImagenRestauranteController::class)->create($restaurante->id, $imagen);
+                    }
+                }else {
+                    Log::info('Sin imagenes');
+                }
+
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant '.$restaurante->name.' update');
 

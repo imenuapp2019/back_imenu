@@ -26,19 +26,30 @@
                     <div class="form-group">
                         <div class="form-check">
                             <label for="ltt">Latitude:</label>
-                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" value="{{$restaurants->latitude}}">
+                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="lgt">Longitude:</label>
-                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" value="{{$restaurants->longitude}}">
+                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="pn">Phone number:</label>
-                            <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" value="{{$restaurants->phone_number}}">
+                            <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" pattern="[0-9]{9}" value="{{$restaurants->phone_number}}">
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="banner">Banner:</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" accept=".jpg,.png,.jpeg" class="custom-file-input" name="images[]" id="banner" multiple>
+                                    <label class="custom-file-label" for="banner">Choose file</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,7 +69,16 @@
                     <div class="form-group">
                         <div class="form-check">
                             @forelse ($images as $image)
-                                <img src="/storage/{{$image->URL}}" alt="">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <img class="mt-4" src="/TFG/Imenu/public/storage/{{$image->URL}}" alt="" style="width:100%">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="deleteImages[]" value="{{$image->id}}"> Select to delete</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @empty
                                 <div class="alert alert-primary" role="alert">
                                     No images aviable.
@@ -73,4 +93,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="{{ asset('js/input-file.js') }}" defer></script>
 @endsection
