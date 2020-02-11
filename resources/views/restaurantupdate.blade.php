@@ -9,7 +9,7 @@
     @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form action="{{ action('RestauranteController@update', ['id' => $restaurants->id]) }}" method="POST" class="needs-validation">
+                <form action="{{ action('RestauranteController@update', ['id' => $restaurants->id]) }}" method="POST" class="needs-validation" enctype="multipart/form-data">
                 @csrf
                     <div class="form-group">
                         <div class="form-check">
@@ -72,6 +72,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="thumbnail">
+                                        {{--La parte del src q pone /TFG/Imenu es el nombre de tu carpeta del proyecto cambiar en el caso de cada uno si se quiere utilizar--}}
                                         <img class="mt-4" src="/TFG/Imenu/public/storage/{{$image->URL}}" alt="" style="width:100%">
                                         <div class="checkbox">
                                             <label><input type="checkbox" name="deleteImages[]" value="{{$image->id}}"> Select to delete</label>
