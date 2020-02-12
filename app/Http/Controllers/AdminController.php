@@ -11,4 +11,6 @@ use Auth;
 class AdminController extends Controller
 {
 
+//prueba de la subida para ver si funcionas
+
 }
