@@ -50,8 +50,6 @@
             <div class= "text-center"> <p> <strong>Latitud: </strong>{{$restaurante->latitude}} </p> </div>
 
             <div class= "text-center"> <p> <strong>Longitud: </strong>{{$restaurante->longitude}} </p> </div>
-
-            <div class= "text-center"> <p> <strong>Tipo de comida: </strong>{{$restaurante->longitude}} </p> </div>
         </div>
     </div>
 @endsection
