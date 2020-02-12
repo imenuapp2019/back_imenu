@@ -41,8 +41,9 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function loginAPI(Request $request)
     {
+        $loginUser['serverRequest']= 404;
         $user = User::find($request->email);
         if (Hash::check($request->password, $user->password)) {
             $loginUser = [
@@ -57,6 +58,7 @@ class LoginController extends Controller
         }else{
             $loginUser['serverRequest']= 403;
         }
-            return response()->json($loginUser);
+        return response()->json($loginUser);
+
     }
 }

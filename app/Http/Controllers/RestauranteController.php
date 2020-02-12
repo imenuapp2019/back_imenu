@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ImagenRestaurante;
 use App\Restaurante;
+use App\Tipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -43,6 +45,14 @@ class RestauranteController extends Controller
                 $restaurante->phone_number = $request->phone_number;
                 $restaurante->tipo_id = $request->tipo_id;
                 $restaurante->save();
+
+                if (isset($request->images)) {
+                    foreach ($request->images as $image) {
+                        app(ImagenRestauranteController::class)->create($restaurante->id, $image);
+                    }
+                }else {
+                    Log::info('Sin imagenes');
+                }
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant '.$restaurante->name.' create');
 
@@ -54,7 +64,8 @@ class RestauranteController extends Controller
             }
 
         }
-        return response()->json($response);
+        Log::critical('Function: Create Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
+        return redirect()->route('home');
     }
 
     public function delete($id){
@@ -63,6 +74,9 @@ class RestauranteController extends Controller
 
         if (!empty($restaurante)) {
             try {
+                foreach ($restaurante->images as $image) {
+                    app(ImagenRestauranteController::class)->delete($image->id);
+                }
                 $restaurante->delete();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant delete');
@@ -73,7 +87,8 @@ class RestauranteController extends Controller
 
             }
         }
-        return response()->json($response);
+        Log::critical('Function: Delete Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
+        return redirect()->route('home');
     }
 
     public function update(Request $request, $id){
@@ -89,6 +104,23 @@ class RestauranteController extends Controller
                 $restaurante->phone_number = $request->phone_number ? $request->phone_number : $restaurante->phone_number;
                 $restaurante->tipo_id = $request->tipo_id ? $request->tipo_id : $restaurante->tipo_id;
                 $restaurante->save();
+
+                if (isset($request->deleteImages)) {
+                    foreach ($request->deleteImages as $image) {
+                        app(ImagenRestauranteController::class)->delete($image);
+                    }
+                } else {
+                    Log::info('Sin imagenes');
+                }
+
+                if (isset($request->images)) {
+                    foreach ($request->images as $imagen) {
+                        app(ImagenRestauranteController::class)->create($restaurante->id, $imagen);
+                    }
+                }else {
+                    Log::info('Sin imagenes');
+                }
+
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant '.$restaurante->name.' update');
 
@@ -98,7 +130,11 @@ class RestauranteController extends Controller
 
             }
         }
-        return response()->json($response);
+        Log::critical('Function: Update Restaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
+        $foodtype = Tipo::all();
+        $images = ImagenRestaurante::all()
+            ->where('restaurante_id', $id);
+        return redirect()->route('update', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true, 'images'=>$images]);
     }
 
     public function home(){
@@ -120,5 +156,28 @@ class RestauranteController extends Controller
 
         return response()->json($restaurante);
     }
+
+    public function search(Request $request){
+        $restaurante = DB::table('restaurantes as r')
+            ->select('r.name', 't.name as type', 'i.URL as image_URL', 'r.latitude', 'r.longitude')
+            ->join('tipos as t', 'r.tipo_id', '=', 't.id')
+            ->leftJoin('imagen_restaurantes as i', 'i.restaurante_id', '=', 'r.id')
+            ->where('r.name', 'LIKE', '%'.$request->name.'%')
+            ->get();
+
+        return response()->json($restaurante);
+    }
+
+   public function showRestaurant( Request $request, $id) {
+
+    $response = array('error_code' => 404, 'error_msg' => 'Restaurant' .$id. 'not found');
+    $restaurante = Restaurante::find($id);
+
+    if( $restaurante) {
+        return view('vistaRestaurante');
+    }
+
+
+   }
 
 }

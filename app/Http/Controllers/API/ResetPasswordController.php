@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -22,22 +22,23 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected function sendResetResponse(Request $request, $response)
     {
-
-        $this->middleware('guest');
+        die("estoy aqui2");
+        if (request()->header('Content-Type') == 'application/json') {
+        return response()->json(['success' => '200']);
+        }
     }
+
+
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        if (request()->header('Content-Type') == 'application/json') {
+            return response()->json(['failured' => '422']);
+        }
+    }
+
+
 
 }

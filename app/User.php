@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Notifications\passwordResetNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 class User extends Authenticatable
 {
@@ -20,6 +22,7 @@ class User extends Authenticatable
     ];
 
     protected $primaryKey = 'email';
+    protected $keyType = 'string';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        //die("llamando a la nueva notificacion");
+        $this->notify(new passwordResetNotification($token));
+    }
 }

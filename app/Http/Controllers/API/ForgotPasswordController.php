@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,14 +22,20 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected function sendResetLinkResponse(Request $request, $response)
     {
-        $this->middleware('guest');
+
+        if (request()->header('Content-Type') == 'application/json') {
+            return response()->json(['success' => '200']);
+        }
+    }
+
+
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        if (request()->header('Content-Type') == 'application/json') {
+            return response()->json(['failured' => '422']);
+        }
     }
 
 

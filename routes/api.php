@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlergernosController;
 use App\ImagenRestaurante;
 use Illuminate\Http\Request;
 use App\User;
@@ -27,10 +28,12 @@ Route::middleware('auth:api')->put('user/modify/{id}', 'UserController@update');
 //Delete user//
 Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete');
 
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/loginApi', 'Auth\LoginController@loginAPI');
 
-Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+//Resetear eñ correo recibe un Json
+Route::post('/password/email', 'API\ForgotPasswordController@sendResetLinkEmail');
 
+Route::post('/password/reset', 'API\ResetPasswordController@reset');
 //Mostrar tipos de comida
 Route::get('tipo', 'TipoController@listarTipos');
 //Crear nuevo tipo
@@ -54,16 +57,12 @@ Route::get('enviar', ['as' => 'enviar', function () {
 
     return "Se envío el email";
 }]);
-//Create restaurante
-Route::middleware('auth:api')->post('restaurantes/create', 'RestauranteController@create');
-//Delete restaurante
-Route::middleware('auth:api')->delete('restaurantes/delete/{id}', 'RestauranteController@delete');
-//Update restaurante
-Route::middleware('auth:api')->put('restaurantes/update/{id}', 'RestauranteController@update');
 //Get datos del home
 Route::get('homeRestaurante', 'RestauranteController@home');
 //Get datos del restaurante
 Route::get('restaurante', 'RestauranteController@returnAll');
+//Get buscador de restaurante
+Route::get('restaurantes/search', 'RestauranteController@search');
 
 //Get tipo
 Route::middleware('auth:api')->get('tipo', 'TipoController@getAll');
@@ -80,3 +79,45 @@ Route::middleware('auth:api')->post('imagenRestaurante/create', 'ImagenRestauran
 Route::middleware('auth:api')->delete('imagenRestaurante/delete/{id}', 'ImagenRestauranteController@delete');
 //Update imagen restaurante
 Route::middleware('auth:api')->put('imagenRestaurante/update/{id}', 'ImagenRestauranteController@update');
+
+
+// Create alergenos
+Route::middleware('auth:api')->post('alergeno/create', 'AlergernosController@create');
+//Delete alergenos
+Route::middleware('auth:api')->delete('alergeno/delete/{id}', 'AlergernosController@delete');
+//update alergeno
+Route::middleware('auth:api')->put('alergeno/update/{id}', 'AlergernosController@update');
+//show alergenos
+Route::middleware('auth:api')->get('alergeno', 'AlergernosController@getAll');
+
+
+
+
+// Create foto del plato
+Route::middleware('auth:api')->post('fotoplato/create', 'PlatePicture@create');
+//Delete foto del plato
+Route::middleware('auth:api')->delete('fotoplato/delete/{id}', 'PlatePicture@delete');
+//update foto del plato
+Route::middleware('auth:api')->put('fotoplato/update/{id}', 'PlatePiocture@update');
+//show foto del plato
+Route::middleware('auth:api')->get('fotoplato', 'PlatePicture@getAll');
+
+
+// Create plato
+Route::middleware('auth:api')->post('plato/create', 'PlateController@create');
+//Delete plato
+Route::middleware('auth:api')->delete('plato/delete/{id}', 'PlateController@delete');
+//update plato
+Route::middleware('auth:api')->put('plato/update/{id}', 'PlateController@update');
+//show plato
+Route::middleware('auth:api')->get('plato', 'PlateController@getAll');
+
+
+
+
+
+
+
+
+
+
