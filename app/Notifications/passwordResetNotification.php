@@ -6,19 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Lang;
 
-class MyResetPassword extends Notification
+class passwordResetNotification extends Notification
 {
     use Queueable;
 
+    public $token;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -40,10 +42,16 @@ class MyResetPassword extends Notification
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->greeting('Hola')
+            ->subject(Lang::getFromJson('Correo para cambiar su contraseña'))
+            ->line(Lang::getFromJson('Ud a recibido este correo para cambiar su contraseña de cuenta de iMenu.'))
+            ->action(Lang::getFromJson('Cambiar su contraseña'), url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+            ->line(Lang::getFromJson('Este link para cambiar su contraseña durara unos cuantos minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(Lang::getFromJson('Si no necesita cambiar la contraseña no realice ninguna acción, muchas gracias por utilizar nuestra aplicación iMenu'))
+            ->salutation('Saludos, '. config('app.name'));
+
     }
 
     /**

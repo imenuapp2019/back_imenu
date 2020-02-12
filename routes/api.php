@@ -31,8 +31,9 @@ Route::middleware('auth:api')->delete('user/delete/{id}', 'UserController@delete
 Route::post('/loginApi', 'Auth\LoginController@loginAPI');
 
 //Resetear eñ correo recibe un Json
-Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/email', 'API\ForgotPasswordController@sendResetLinkEmail');
 
+Route::post('/password/reset', 'API\ResetPasswordController@reset');
 //Mostrar tipos de comida
 Route::get('tipo', 'TipoController@listarTipos');
 //Crear nuevo tipo
