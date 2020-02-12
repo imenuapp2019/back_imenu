@@ -34,3 +34,8 @@ Route::post('register', 'Auth\RegisterController@create');
 Route::post('/password.email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+// Vista del restaurante
+Route::get('Restaurante/read/{id}', 'showRestaurant@showRestaurant');
+
+// Vista usuarios
+Route::get('usuarios/read/{id}', 'showUser@showUser');

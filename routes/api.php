@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlergernosController;
 use App\ImagenRestaurante;
 use Illuminate\Http\Request;
 use App\User;
@@ -78,4 +79,45 @@ Route::middleware('auth:api')->post('imagenRestaurante/create', 'ImagenRestauran
 Route::middleware('auth:api')->delete('imagenRestaurante/delete/{id}', 'ImagenRestauranteController@delete');
 //Update imagen restaurante
 Route::middleware('auth:api')->put('imagenRestaurante/update/{id}', 'ImagenRestauranteController@update');
+
+
+// Create alergenos
+Route::middleware('auth:api')->post('alergeno/create', 'AlergernosController@create');
+//Delete alergenos
+Route::middleware('auth:api')->delete('alergeno/delete/{id}', 'AlergernosController@delete');
+//update alergeno
+Route::middleware('auth:api')->put('alergeno/update/{id}', 'AlergernosController@update');
+//show alergenos
+Route::middleware('auth:api')->get('alergeno', 'AlergernosController@getAll');
+
+
+
+
+// Create foto del plato
+Route::middleware('auth:api')->post('fotoplato/create', 'PlatePicture@create');
+//Delete foto del plato
+Route::middleware('auth:api')->delete('fotoplato/delete/{id}', 'PlatePicture@delete');
+//update foto del plato
+Route::middleware('auth:api')->put('fotoplato/update/{id}', 'PlatePiocture@update');
+//show foto del plato
+Route::middleware('auth:api')->get('fotoplato', 'PlatePicture@getAll');
+
+
+// Create plato
+Route::middleware('auth:api')->post('plato/create', 'PlateController@create');
+//Delete plato
+Route::middleware('auth:api')->delete('plato/delete/{id}', 'PlateController@delete');
+//update plato
+Route::middleware('auth:api')->put('plato/update/{id}', 'PlateController@update');
+//show plato
+Route::middleware('auth:api')->get('plato', 'PlateController@getAll');
+
+
+
+
+
+
+
+
+
 
