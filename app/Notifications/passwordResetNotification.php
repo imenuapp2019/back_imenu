@@ -50,7 +50,7 @@ class passwordResetNotification extends Notification
             ->action(Lang::getFromJson('Cambiar su contraseña'), url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
             ->line(Lang::getFromJson('Este link para cambiar su contraseña durara unos cuantos minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
             ->line(Lang::getFromJson('Si no necesita cambiar la contraseña no realice ninguna acción, muchas gracias por utilizar nuestra aplicación iMenu'))
-            ->salutation('Saludos, de parte de iMenu');
+            ->salutation('Saludos, '. config('app.name'));
 
     }
 

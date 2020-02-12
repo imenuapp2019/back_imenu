@@ -24,7 +24,7 @@ class ForgotPasswordController extends Controller
 
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        //die("estoy aqui1");
+
         if (request()->header('Content-Type') == 'application/json') {
             return response()->json(['success' => '200']);
         }
