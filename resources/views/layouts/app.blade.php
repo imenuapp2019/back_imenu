@@ -36,7 +36,33 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
-                            prueba
+                            <a id="userDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Users <span class="caret"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="restaurantDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Restaurants <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="restaurantDropdown">
+                                <a class="dropdown-item" href="{{ url("home")}}">
+                                    List
+                                </a>
+                                <a class="dropdown-item" href="{{ url("createRestaurante")}}">
+                                    New
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="menuDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu <span class="caret"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dishDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dish <span class="caret"></span>
+                            </a>
                         </li>
                     </ul>
 

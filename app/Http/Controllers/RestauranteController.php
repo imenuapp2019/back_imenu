@@ -74,6 +74,9 @@ class RestauranteController extends Controller
 
         if (!empty($restaurante)) {
             try {
+                foreach ($restaurante->images as $image) {
+                    app(ImagenRestauranteController::class)->delete($image->id);
+                }
                 $restaurante->delete();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Restaurant delete');
