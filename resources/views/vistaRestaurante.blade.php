@@ -1,52 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href=" {{asset('css/fondo.css')}}" type="text/css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <title>Restaurante</title>
-</head>
-<body class= "fondo">
-<div class = 'container'>
-    <p class="h1 text-center text-white"  >{{$restaurante->name}} </p>
-</div>
+@extends('layouts.app')
 
+@section('content')
     <div class = 'container'>
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-           @php $activa = true @endphp
-
-
-            @for($i = 0; $i < count($fotos); $i++ )
-
-          <div class="carousel-item <?php if($i ==0){ echo 'active';} ?>">
-          <img src="{{$fotos[$i]->URL}}" class="d-block w-100" alt="...">
-          </div>
-          @endfor
-        </div>
-      </div>
-
-      <div class="card">
-
-      <div>   <address class= "text-center"> <strong>Dirección: </strong>{{$restaurante->address}} </address> </div>
-
-      <div class="text-center">  <p> <strong>Número de teléfono: </strong>{{ $restaurante->phone_number}} </p> </div>
-
-      <div class= "text-center"> <p> <strong>Latitud: </strong>{{$restaurante->latitude}} </p> </div>
-
-      <div class= "text-center"> <p> <strong>Longitud: </strong>{{$restaurante->longitude}} </p> </div>
-
-      </div>
-
+        <p class="h1 text-center"  >{{$restaurante->name}} </p>
     </div>
 
+    <div class = 'container'>
+            @if (isset($fotos))
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                        @php $i = 0 @endphp
+                        @foreach ($fotos as $image)
+                            @if($i == 0)
+                                <div class="carousel-item active">
+                                    {{--La parte del src q pone /TFG/Imenu es el nombre de tu carpeta del proyecto cambiar en el caso de cada uno si se quiere utilizar--}}
+                                    <img class="" src="/TFG/Imenu/public/storage/{{$image->URL}}" alt="" style="width:100%">
+                                </div>
+                            @else
+                                <div class="carousel-item">
+                                    {{--La parte del src q pone /TFG/Imenu es el nombre de tu carpeta del proyecto cambiar en el caso de cada uno si se quiere utilizar--}}
+                                    <img class="" src="/TFG/Imenu/public/storage/{{$image->URL}}" alt="" style="width:100%">
+                                </div>
+                            @endif
+                            @php $i = 1 @endphp
+                        @endforeach
+                    </div>
 
+                    <!-- No funciona -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            @else
+                <div class="alert alert-primary" role="alert">
+                    No images aviable.
+               </div>
+            @endif
 
+        <div class="card">
+            <div>   <address class= "text-center"> <strong>Dirección: </strong>{{$restaurante->address}} </address> </div>
 
+            <div class="text-center">  <p> <strong>Número de teléfono: </strong>{{ $restaurante->phone_number}} </p> </div>
 
-</body>
-</html>
+            <div class= "text-center"> <p> <strong>Latitud: </strong>{{$restaurante->latitude}} </p> </div>
+
+            <div class= "text-center"> <p> <strong>Longitud: </strong>{{$restaurante->longitude}} </p> </div>
+
+            <div class= "text-center"> <p> <strong>Tipo de comida: </strong>{{$restaurante->longitude}} </p> </div>
+        </div>
+    </div>
+@endsection
+

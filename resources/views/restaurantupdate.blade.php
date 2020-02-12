@@ -3,52 +3,53 @@
 @section('content')
 <div class="container">
     @if ($change)
-        <div class="alert alert-info">
+        <div class="alert alert-success">
             <strong>Info!</strong> Changes saved.
         </div>
     @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form action="{{ action('RestauranteController@update', ['id' => $restaurants->id]) }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ action('RestauranteController@update', ['id' => $restaurants->id]) }}" method="POST" class="needs-validation" enctype="multipart/form-data">
                 @csrf
                     <div class="form-group">
                         <div class="form-check">
                             <label for="name">Name:</label>
                             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="{{$restaurants->name}}">
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="add">Address:</label>
                             <input type="text" class="form-control" id="add" placeholder="Enter address" name="address" value="{{$restaurants->address}}">
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="ltt">Latitude:</label>
-                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" value="{{$restaurants->latitude}}">
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
+                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="lgt">Longitude:</label>
-                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" value="{{$restaurants->longitude}}">
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
+                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="pn">Phone number:</label>
-                            <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" value="{{$restaurants->phone_number}}">
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Please fill out this field.</div>
+                            <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" pattern="[0-9]{9}" value="{{$restaurants->phone_number}}">
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="banner">Banner:</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" accept=".jpg,.png,.jpeg" class="custom-file-input" name="images[]" id="banner" multiple>
+                                    <label class="custom-file-label" for="banner">Choose file</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -65,6 +66,27 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            @forelse ($images as $image)
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        {{--La parte del src q pone /TFG/Imenu es el nombre de tu carpeta del proyecto cambiar en el caso de cada uno si se quiere utilizar--}}
+                                        <img class="mt-4" src="/TFG/Imenu/public/storage/{{$image->URL}}" alt="" style="width:100%">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="deleteImages[]" value="{{$image->id}}"> Select to delete</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @empty
+                                <div class="alert alert-primary" role="alert">
+                                    No images aviable.
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
                     <button type="submit" value="submit" class="btn btn-primary">Sent</button>
                     <button type="reset" value="reset" class="btn btn-primary">Reset</button>
                     <button type="button" class="btn btn-primary"><a style="text-decoration:none" class="text-white" href="{{ url("home")}}">Home</a></button>
@@ -72,4 +94,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="{{ asset('js/input-file.js') }}" defer></script>
 @endsection
