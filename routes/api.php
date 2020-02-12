@@ -113,6 +113,12 @@ Route::middleware('auth:api')->get('plato', 'PlateController@getAll');
 
 
 
+// Create menu
+Route::middleware('auth:api')->post('menu/create', 'MenuController@create');
+//Delete menu
+Route::middleware('auth:api')->delete('menu/delete/{id}', 'MenuController@delete');
+//update menu
+Route::middleware('auth:api')->put('menu/update/{id}', 'MenuController@update');
 
 
 
