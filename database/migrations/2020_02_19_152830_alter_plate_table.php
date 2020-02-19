@@ -13,7 +13,10 @@ class AlterPlateTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('plate', function (Blueprint $table) {
+            $table->unsignedInteger('menu_id');
+            $table->foreign('menu_id')->references('id')->on('menus');
+        });
     }
 
     /**
@@ -23,6 +26,9 @@ class AlterPlateTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('plate', function (Blueprint $table) {
+            $table->dropForeign('plate_menu_id_foreign');
+            $table->dropColumn('menu_id');
+        });
     }
 }
