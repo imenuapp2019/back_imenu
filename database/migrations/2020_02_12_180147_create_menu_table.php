@@ -13,7 +13,6 @@ class CreateMenuTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('menu');
         Schema::create('menu', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
