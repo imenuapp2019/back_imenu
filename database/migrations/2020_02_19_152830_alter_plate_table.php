@@ -15,7 +15,7 @@ class AlterPlateTable extends Migration
     {
         Schema::table('plate', function (Blueprint $table) {
             $table->unsignedInteger('menu_id');
-            $table->foreign('menu_id')->references('id')->on('menus');
+            $table->foreign('menu_id')->references('id')->on('menu');
         });
     }
 

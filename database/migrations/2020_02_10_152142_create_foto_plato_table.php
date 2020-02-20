@@ -16,6 +16,8 @@ class CreateFotoPlatoTable extends Migration
         Schema::create('foto_plato', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('URL');
+            $table->unsignedBigInteger('plate_id');
+            $table->foreign('plate_id')->references('id')->on('plate');
             $table->timestamps();
         });
     }

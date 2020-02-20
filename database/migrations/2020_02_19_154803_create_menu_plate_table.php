@@ -15,6 +15,10 @@ class CreateMenuPlateTable extends Migration
     {
         Schema::create('menu_plate', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('menu_id');
+            $table->unsignedInteger('plate_id');
+            $table->foreign('menu_id')->references('id')->on('menu');
+            $table->foreign('plate_id')->references('id')->on('plate');
             $table->timestamps();
         });
     }
