@@ -20,6 +20,7 @@ class CreateRestaurantesTable extends Migration
             $table->float('latitude');
             $table->float('longitude');
             $table->integer('phone_number');
+            $table->string('description');
             $table->timestamps();
         });
     }
