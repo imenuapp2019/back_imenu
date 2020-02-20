@@ -51,11 +51,9 @@
                     <div class="form-check">
                         <label for="ft">Food type:</label>
                         <select class="form-control" id="ft" name="tipo_id">
-                            <option value="1">Japonesa</option>
-                            <option value="2">Chino</option>
-                            <option value="3">Italiana</option>
-                            <option value="4">Vegana</option>
-                            <option value="5">Arabe</option>
+                            @foreach ($type as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
