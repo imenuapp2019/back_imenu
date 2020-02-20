@@ -21,13 +21,13 @@
                 <div class="form-group">
                     <div class="form-check">
                         <label for="ltt">Latitude:</label>
-                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Ej: 123.4567" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
+                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Ej: 123.4567" name="latitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="lgt">Longitude:</label>
-                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
+                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
