@@ -15,8 +15,8 @@ class CreatePlatoContieneAlergenosTable extends Migration
     {
         Schema::create('plato_contiene_alergenos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('alergenos_id');
-            $table->unsignedInteger('plate_id');
+            $table->unsignedBigInteger('alergenos_id');
+            $table->unsignedBigInteger('plate_id');
             $table->foreign('alergenos_id')->references('id')->on('alergenos');
             $table->foreign('plate_id')->references('id')->on('plate');
             $table->timestamps();
