@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFotoPlatoTable extends Migration
+class CreateTipoPlatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateFotoPlatoTable extends Migration
      */
     public function up()
     {
-        Schema::create('foto_plato', function (Blueprint $table) {
+        Schema::create('tipo_platos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('URL');
-            $table->unsignedBigInteger('plate_id');
-            $table->foreign('plate_id')->references('id')->on('plate');
+            $table->unsignedBigInteger('tipo_id');
+            $table->unsignedBigInteger('plato_id');
+            $table->foreign('tipo_id')->references('id')->on('tipos');
+            $table->foreign('plato_id')->references('id')->on('plate');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateFotoPlatoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foto_plato');
+        Schema::dropIfExists('tipo_platos');
     }
 }
