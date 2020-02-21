@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRRSSSTable extends Migration
+class CreateRedesSocialesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateRRSSSTable extends Migration
      */
     public function up()
     {
-        Schema::create('r_r_s_s_s', function (Blueprint $table) {
+        Schema::create('redes_sociales', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('URL');
+            $table->string('nombre');
+            $table->unsignedInteger('restaurante_id');
+            $table->foreign('restaurante_id')->references('id')->on('restaurantes');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateRRSSSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('r_r_s_s_s');
+        Schema::dropIfExists('redes_sociales');
     }
 }

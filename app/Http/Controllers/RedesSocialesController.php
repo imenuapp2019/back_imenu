@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ARController extends Controller
+class RedesSocialesController extends Controller
 {
     //
 }

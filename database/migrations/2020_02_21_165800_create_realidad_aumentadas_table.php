@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateARSTable extends Migration
+class CreateRealidadAumentadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateARSTable extends Migration
      */
     public function up()
     {
-        Schema::create('a_r_s', function (Blueprint $table) {
+        Schema::create('realidad_aumentadas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('URL');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateARSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('a_r_s');
+        Schema::dropIfExists('realidad_aumentadas');
     }
 }
