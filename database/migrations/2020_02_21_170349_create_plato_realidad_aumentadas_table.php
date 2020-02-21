@@ -17,8 +17,8 @@ class CreatePlatoRealidadAumentadasTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('plate_id');
             $table->unsignedBigInteger('realidadaumentada_id');
-            $table->foreign('plate_id')->reference('id')->on('plate');
-            $table->foreign('realidadaumentada_id')->reference('id')->on('realidad_aumentadas');
+            $table->foreign('plate_id')->references('id')->on('plate');
+            $table->foreign('realidadaumentada_id')->references('id')->on('realidad_aumentadas');
             $table->timestamps();
         });
     }
