@@ -36,6 +36,9 @@ class RestauranteController extends Controller
         }elseif (!$request->tipo_id) {
             $response['error_msg'] = 'Type is requiered';
 
+        }elseif (!$request->description) {
+            $response['error_msg'] = 'Description is requiered';
+
         }else {
             try {
                 $restaurante->name = ucfirst(strtolower($request->name));
@@ -44,6 +47,7 @@ class RestauranteController extends Controller
                 $restaurante->longitude = $request->longitude;
                 $restaurante->phone_number = $request->phone_number;
                 $restaurante->tipo_id = $request->tipo_id;
+                $restaurante->description = $request->description;
                 $restaurante->save();
 
                 if (isset($request->images)) {
@@ -103,6 +107,7 @@ class RestauranteController extends Controller
                 $restaurante->longitude = $request->longitude ? $request->longitude : $restaurante->longitude;
                 $restaurante->phone_number = $request->phone_number ? $request->phone_number : $restaurante->phone_number;
                 $restaurante->tipo_id = $request->tipo_id ? $request->tipo_id : $restaurante->tipo_id;
+                $restaurante->description = $request->description ? $request->description : $restaurante->description;
                 $restaurante->save();
 
                 if (isset($request->deleteImages)) {
@@ -149,7 +154,7 @@ class RestauranteController extends Controller
 
     public function returnAll(){
         $restaurante = DB::table('restaurantes as r')
-            ->select('r.id', 'r.name', 't.name as type', 'i.URL as image_URL', 'r.phone_number', 'r.address', 'r.latitude', 'r.longitude')
+            ->select('r.id', 'r.name', 'r.description', 't.name as type', 'i.URL as image_URL', 'r.description', 'r.phone_number', 'r.address', 'r.latitude', 'r.longitude')
             ->join('tipos as t', 'r.tipo_id', '=', 't.id')
             ->leftJoin('imagen_restaurantes as i', 'r.id', '=', 'i.restaurante_id')
             ->get();
@@ -168,16 +173,9 @@ class RestauranteController extends Controller
         return response()->json($restaurante);
     }
 
-   public function showRestaurant( Request $request, $id) {
-
-    $response = array('error_code' => 404, 'error_msg' => 'Restaurant' .$id. 'not found');
+   public function showRestaurant($id) {
     $restaurante = Restaurante::find($id);
 
-    if( $restaurante) {
-        return view('vistaRestaurante');
-    }
-
-
+    return view('vistaRestaurante');
    }
-
 }
