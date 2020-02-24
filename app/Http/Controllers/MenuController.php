@@ -23,7 +23,7 @@ class MenuController extends Controller
                 $menu->name = $request->name;
                 $menu->save();
                 $response = array('error_code'=>200, 'error_msg' => 'OK');
-                Log::info('Image '.$menu->name.' from restaurant '.$menu->restaurante_id.' create');
+                Log::info('Menu '.$menu->name.' from restaurant '.$menu->restaurante_id.' create');
 
             } catch (\Exception $e) {
                 Log::alert('Function: Create Menu, Message: '.$e);
@@ -47,7 +47,7 @@ class MenuController extends Controller
                     Log::info('Menu '.$menu->name.' from restaurant '.$menu->restaurante_id.' update');
 
                 } catch (\Exception $e) {
-                    Log::alert('Function: Update ImagenRestaurante, Message: '.$e);
+                    Log::alert('Function: Update Menu, Message: '.$e);
                     $response = array('error_code' => 500, 'error_msg' => "Server connection error");
 
                 }

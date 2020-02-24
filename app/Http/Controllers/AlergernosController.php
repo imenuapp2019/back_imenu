@@ -8,12 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class AlergernosController extends Controller
 {
-    public function getAll() {
-      $alergenos = alergenos::all(['name']);
-      return response()->json($alergenos);
-    }
-
-
     public function create(Request $request) {
         $response = array('error_code' => 400, 'error_msg' => 'Error inserting info' );
         $alergeno = new alergenos;
