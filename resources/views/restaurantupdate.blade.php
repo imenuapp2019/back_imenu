@@ -26,13 +26,13 @@
                     <div class="form-group">
                         <div class="form-check">
                             <label for="ltt">Latitude:</label>
-                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
+                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="lgt">Longitude:</label>
-                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
+                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
                         </div>
                     </div>
                     <div class="form-group">

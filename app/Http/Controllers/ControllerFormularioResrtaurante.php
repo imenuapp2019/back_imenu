@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Tipo;
+
 class ControllerFormularioResrtaurante extends Controller
 {
    public function callController() {
-        return view('formularioMakeRestaurante');
+    $foodtype = Tipo::all();
+
+    return view('formularioMakeRestaurante', ['type'=>$foodtype]);
    }
 }
