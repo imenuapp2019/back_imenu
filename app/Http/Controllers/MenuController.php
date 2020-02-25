@@ -7,29 +7,29 @@ use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
-    public function create(Request $request) {
-        $response = array('error_code' =>400, 'error_msg' => 'Error inserting info');
-        $menu = new Menu();
+        public function create(Request $request) {
+            $response = array('error_code' =>400, 'error_msg' => 'Error inserting info');
+            $menu = new Menu();
 
-        if(!$request->name) {
-            $response['error_msg'] = 'name is required';
+            if(!$request->name) {
+                $response['error_msg'] = 'name is required';
 
-        }elseif(!$request->restaurante_id) {
-            $response['error_msg'] = 'Restaurante_id is requiered';
+            }elseif(!$request->restaurante_id) {
+                $response['error_msg'] = 'Restaurante_id is requiered';
 
-        }else{
-            try{
-                $menu->restaurante_id = $request->restaurante_id;
-                $menu->name = $request->name;
-                $menu->save();
-                $response = array('error_code'=>200, 'error_msg' => 'OK');
-                Log::info('Menu '.$menu->name.' from restaurant '.$menu->restaurante_id.' create');
+            }else{
+                try{
+                    $menu->restaurante_id = $request->restaurante_id;
+                    $menu->name = ucfirst(strtolower($request->name));
+                    $menu->save();
+                    $response = array('error_code'=>200, 'error_msg' => 'OK');
+                    Log::info('Menu '.$menu->name.' from restaurant '.$menu->restaurante_id.' create');
 
-            } catch (\Exception $e) {
-                Log::alert('Function: Create Menu, Message: '.$e);
-                $response = array('error_code' => 500, 'error_msg' => "Server connection error");
-            }
+                } catch (\Exception $e) {
+                    Log::alert('Function: Create Menu, Message: '.$e);
+                    $response = array('error_code' => 500, 'error_msg' => "Server connection error");
 
+                }
             }
             return response()->json ($response);
         }
@@ -40,7 +40,7 @@ class MenuController extends Controller
 
             if (isset($request) && isset($id) && !empty($menu)) {
                 try {
-                    $menu->name = $request->name ? $request->name : $menu->name;
+                    $menu->name = $request->name ? ucfirst(strtolower($request->name)) : $menu->name;
                     $menu->restaurante_id = $request->restaurante_id ? $request->restaurante_id : $menu->restaurante_id ;
                     $menu->save();
                     $response = array('error_code'=>200, 'error_msg'=> 'OK');
