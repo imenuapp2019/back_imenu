@@ -172,4 +172,29 @@ class RestauranteController extends Controller
 
         return response()->json($restaurante);
     }
+
+    public function principal(){
+        $restaurante = DB::table('restaurantes as r')
+            ->select(
+                'r.id', 'r.name', 'r.description', 'r.address', 'r.latitude', 'r.longitude', 'r.phone_number',
+                't.name as type',
+                'i.id as image_id', 'i.URL as image_URL',
+                'rs.id as rrss_id', 'rs.nombre as rrss_name', 'rs.URL as rrss_URL',
+                'm.id as menu_id', 'm.name as menu_name',
+                'p.id as plato_id', 'p.name as plato_name', 'p.price as plato_precio',
+                'fp.id as fotoplato_id', 'fp.URL as fotoplato_URL',
+                'a.id as alergenos_id', 'a.name as alergenos_name', 'a.URL as icono')
+            ->join('tipos as t', 'r.tipo_id', '=', 't.id')
+            ->leftJoin('imagen_restaurantes as i', 'r.id', '=', 'i.restaurante_id')
+            ->leftJoin('redes_sociales as rs', 'r.id', '=', 'rs.restaurante_id')
+            ->leftJoin('menu as m', 'r.id', '=', 'm.restaurante_id')
+            ->leftJoin('menu_platos as mp', 'm.id', '=', 'mp.menu_id')
+            ->leftJoin('plate as p', 'p.id', '=', 'mp.plato_id')
+            ->leftJoin('foto_plato as fp', 'p.id', '=', 'fp.plate_id')
+            ->leftJoin('plato_contiene_alergenos as pa', 'p.id', '=', 'pa.plate_id')
+            ->leftJoin('alergenos as a', 'a.id', '=', 'pa.alergenos_id')
+            ->get();
+
+        return response()->json($restaurante);
+    }
 }

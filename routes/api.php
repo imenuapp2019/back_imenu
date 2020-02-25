@@ -114,7 +114,7 @@ Route::middleware('auth:api')->delete('menu/delete/{id}', 'MenuController@delete
 Route::middleware('auth:api')->put('menu/update/{id}', 'MenuController@update');
 
 
-
+Route::get('verTodo', 'RestauranteController@principal');
 
 
 
