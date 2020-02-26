@@ -247,11 +247,11 @@ class RestauranteController extends Controller
                         ]
                     ]
                 ];
-            }else {
+            }/*else {
                 if ($lista[$restaurante['images']] != $restaurante->id) {
                     return 1;
                 }
-            }
+            }*/
         }
     return $lista;
     }
