@@ -6,6 +6,7 @@ use App\ImagenRestaurante;
 use App\Restaurante;
 use App\Tipo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -174,7 +175,7 @@ class RestauranteController extends Controller
     }
 
     public function principal(){
-        $restaurante = DB::table('restaurantes as r')
+        $restaurantes = DB::table('restaurantes as r')
             ->select(
                 'r.id', 'r.name', 'r.description', 'r.address', 'r.latitude', 'r.longitude', 'r.phone_number',
                 't.name as type',
@@ -195,6 +196,63 @@ class RestauranteController extends Controller
             ->leftJoin('alergenos as a', 'a.id', '=', 'pa.alergenos_id')
             ->get();
 
-        return response()->json($restaurante);
+        $lista = [];
+        foreach ($restaurantes as $restaurante) {
+            if (!isset($lista[$restaurante->id])) {
+                $lista[$restaurante->id] = [
+                    'id' => $restaurante->id,
+                    'nombre' => $restaurante->name,
+                    'descripcion' => $restaurante->description,
+                    'direccion' => $restaurante->address,
+                    'latitud' => $restaurante->latitude,
+                    'longitud' => $restaurante->longitude,
+                    'telefono' => $restaurante->phone_number,
+                    'imagenes' => [
+                        $restaurante->image_id =>[
+                            'id' => $restaurante->image_id,
+                            'url' => $restaurante->image_URL
+                        ]
+                    ],
+                    'RRSS' =>[
+                        $restaurante->rrss_id =>[
+                            'id' => $restaurante->rrss_id,
+                            'nombre' => $restaurante->rrss_name,
+                            'url' => $restaurante->rrss_URL
+                        ]
+                    ],
+                    'Menu' =>[
+                        $restaurante->menu_id =>[
+                            'id' => $restaurante->menu_id,
+                            'nombreCategoria' => $restaurante->menu_name,
+                            'platos' =>[
+                                $restaurante->plato_id =>[
+                                    'id' => $restaurante->plato_id,
+                                    'nombre' => $restaurante->plato_name,
+                                    'precio' => $restaurante->plato_precio,
+                                    'imagenes' =>[
+                                        $restaurante->fotoplato_id =>[
+                                            'id' => $restaurante->fotoplato_id,
+                                            'url' => $restaurante->fotoplato_URL
+                                        ]
+                                    ],
+                                    'alergenos' =>[
+                                        $restaurante->alergenos_id =>[
+                                            'id' => $restaurante->alergenos_id,
+                                            'nombre' => $restaurante->alergenos_name,
+                                            'icono' => $restaurante->icono
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+            }else {
+                if ($lista[$restaurante['images']] != $restaurante->id) {
+                    return 1;
+                }
+            }
+        }
+    return $lista;
     }
 }
