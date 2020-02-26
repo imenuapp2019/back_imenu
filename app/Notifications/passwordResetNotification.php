@@ -44,6 +44,7 @@ class passwordResetNotification extends Notification
     {
 
         return (new MailMessage)
+            ->line(Lang::getFromJson('Este correo te lo EnVia iMenu tu App para buscar tu mejor comida'))
             ->greeting('Hola')
             ->subject(Lang::getFromJson('Correo para cambiar su contraseña'))
             ->line(Lang::getFromJson('Ud a recibido este correo para cambiar su contraseña de cuenta de iMenu.'))

@@ -45,32 +45,32 @@
         <div class="container">
             <div class="form-group">
                 <div class="form-check">
-                        <label for="name">Name:</label>
                         <div class= "text-center"> <p> <strong>Description: </strong>{{$restaurante->description}} </p> </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-check">
-                    <label for="name">Name:</label>
                     <div><address class= "text-center"> <strong>Dirección: </strong>{{$restaurante->address}} </address> </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-check">
-                    <label for="name">Name:</label>
-                    <div class="text-center">  <p> <strong>Número de teléfono: </strong>{{ $restaurante->phone_number}} </p> </div>
+                   <div class="text-center">  <p> <strong>Número de teléfono: </strong>{{ $restaurante->phone_number}} </p> </div>
                 </div>
             </div>
             <div class="form-group">
+                    <div class="form-check">
+                            <div class= "text-center"> <p> <strong>Tipo de Restaurate: </strong>{{$tipo->name}} </p> </div>
+                    </div>
+                </div>
+            <div class="form-group">
                 <div class="form-check">
-                    <label for="name">Name:</label>
                     <div class= "text-center"> <p> <strong>Latitud: </strong>{{$restaurante->latitude}} </p> </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-check">
-                    <label for="name">Name:</label>
-                    <div class= "text-center"> <p> <strong>Longitud: </strong>{{$restaurante->longitude}} </p> </div>
+                   div class= "text-center"> <p> <strong>Longitud: </strong>{{$restaurante->longitude}} </p> </div>
                 </div>
             </div>
         </div>
