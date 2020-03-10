@@ -1,0 +1,14 @@
+.plate_img{
+    height: 8rem;
+    width: 10rem;
+}
+.border-2{
+    border-bottom: 2px !important ;
+}
+
+.plate{
+    margin-top: 1rem;
+}
+.plate:hover{
+    background-color: #f9ffc6;
+}

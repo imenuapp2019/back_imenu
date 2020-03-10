@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Menu;
+use App\Plate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
@@ -73,4 +75,31 @@ class MenuController extends Controller
             }
             return response()->json($response);
         }
+
+        public function index($slug){
+            $result = DB::table('menu_platos as mp')->
+            leftJoin('plate as p','mp.plato_id','p.id')->
+            rightJoin('menu as m','m.id','mp.menu_id')->
+                leftJoin('foto_plato as fp','fp.plate_id','p.id')->
+            select('m.id as menu_id' ,'m.name as menu_name','p.id as plato_id','p.name as plato_name','p.price','fp.id as id_photo','fp.url')->
+            where('m.restaurante_id',$slug)->get();
+
+            $menus = [];
+
+            foreach ($result as $item){
+                if(isset($menus[$item->menu_id])){
+                    $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url];
+                }else{
+                    $menus[$item->menu_id] = [
+                        'nombre' => $item->menu_name,
+                        'platos' => []
+                    ];
+                    if($item->plato_id){
+                        $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url];
+                    }
+                }
+            }
+            return view('menuView',['menus'=> $menus]);
+        }
+
 }
