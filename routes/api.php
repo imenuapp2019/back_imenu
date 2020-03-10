@@ -113,8 +113,10 @@ Route::middleware('auth:api')->delete('menu/delete/{id}', 'MenuController@delete
 //update menu
 Route::middleware('auth:api')->put('menu/update/{id}', 'MenuController@update');
 
-
+//Return Restaurantes
 Route::get('verTodo', 'RestauranteController@principal');
+//Return tipos de comida
+Route::get('tipos', 'RestauranteController@tiposRestaurante');
 
 
 

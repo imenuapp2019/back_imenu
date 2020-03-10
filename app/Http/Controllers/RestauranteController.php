@@ -174,6 +174,13 @@ class RestauranteController extends Controller
         return response()->json($restaurante);
     }
 
+    public function tiposRestaurante(){
+        $tipos = DB::table('tipos')
+            ->select("*")
+            ->get();
+        return response()->json($tipos);
+    }
+
     public function principal(){
         $restaurantes = DB::table('restaurantes as r')
             ->select(
@@ -207,52 +214,165 @@ class RestauranteController extends Controller
                     'latitud' => $restaurante->latitude,
                     'longitud' => $restaurante->longitude,
                     'telefono' => $restaurante->phone_number,
-                    'imagenes' => [
-                        $restaurante->image_id =>[
-                            'id' => $restaurante->image_id,
-                            'url' => $restaurante->image_URL
-                        ]
-                    ],
-                    'RRSS' =>[
-                        $restaurante->rrss_id =>[
-                            'id' => $restaurante->rrss_id,
-                            'nombre' => $restaurante->rrss_name,
-                            'url' => $restaurante->rrss_URL
-                        ]
-                    ],
-                    'Menu' =>[
-                        $restaurante->menu_id =>[
-                            'id' => $restaurante->menu_id,
-                            'nombreCategoria' => $restaurante->menu_name,
-                            'platos' =>[
-                                $restaurante->plato_id =>[
-                                    'id' => $restaurante->plato_id,
-                                    'nombre' => $restaurante->plato_name,
-                                    'precio' => $restaurante->plato_precio,
-                                    'imagenes' =>[
-                                        $restaurante->fotoplato_id =>[
-                                            'id' => $restaurante->fotoplato_id,
-                                            'url' => $restaurante->fotoplato_URL
-                                        ]
-                                    ],
-                                    'alergenos' =>[
-                                        $restaurante->alergenos_id =>[
-                                            'id' => $restaurante->alergenos_id,
-                                            'nombre' => $restaurante->alergenos_name,
-                                            'icono' => $restaurante->icono
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                    'imagenes' => [],
+                    'RRSS' =>[],
+                    'Menu' =>[]
                 ];
-            }/*else {
-                if ($lista[$restaurante['images']] != $restaurante->id) {
-                    return 1;
+                if ($restaurante->image_id) {
+                    $lista[$restaurante->id]['imagenes'][] =
+                    ['id' => $restaurante->image_id,
+                    'url' => $restaurante->image_URL];
                 }
-            }*/
+                if ($restaurante->rrss_id) {
+                    $lista[$restaurante->id]['RRSS'][] =
+                    ['id' => $restaurante->rrss_id,
+                    'nombre' => $restaurante->rrss_name,
+                    'url' => $restaurante->rrss_URL];
+                }
+                if ($restaurante->menu_id) {
+                    $lista[$restaurante->id]['Menu'][] =
+                    ['id' => $restaurante->menu_id,
+                    'nombreCategoria' => $restaurante->menu_name,
+                    'platos' =>[]
+                    ];
+                    if ($restaurante->plato_id) {
+                        $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][] =
+                        ['id' => $restaurante->plato_id,
+                        'nombre' => $restaurante->plato_name,
+                        'precio' => $restaurante->plato_precio,
+                        'imagenes' => [],
+                        'alergenos' =>[]
+                        ];
+                        if ($restaurante->fotoplato_id) {
+                            $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][count($lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'])-1]['imagenes'][] =
+                            ['id' => $restaurante->fotoplato_id,
+                            'url' => $restaurante->fotoplato_URL];
+                        }
+                        if ($restaurante->alergenos_id) {
+                            $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][count($lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'])-1]['alergenos'][] =
+                            ['id' => $restaurante->alergenos_id,
+                            'nombre' => $restaurante->alergenos_name,
+                            'icono' => $restaurante->icono];
+                        }
+                    }
+                }
+            }else {
+                if ($restaurante->image_id) {
+                    $encontradoImage = false;
+                    foreach ($lista[$restaurante->id]['imagenes'] as $image) {
+                        if($image['id'] == $restaurante->image_id){
+                            $encontradoImage = true;
+                        }
+                    }
+                    if(!$encontradoImage){
+                        $lista[$restaurante->id]['imagenes'][] =
+                        ['id' => $restaurante->image_id,
+                        'url' => $restaurante->image_URL];
+                    }
+                }
+
+                if ($restaurante->rrss_id) {
+                    $encontradoRRSS = false;
+                    foreach ($lista[$restaurante->id]['RRSS'] as $rrss) {
+                        if($rrss['id'] == $restaurante->rrss_id){
+                            $encontradoRRSS = true;
+                        }
+                    }
+                    if(!$encontradoRRSS){
+                        $lista[$restaurante->id]['RRSS'][] =
+                        ['id' => $restaurante->rrss_id,
+                        'nombre' => $restaurante->rrss_name,
+                        'url' => $restaurante->rrss_URL];
+                    }
+                }
+
+                if ($restaurante->menu_id) {
+                    $encontradoMenu = false;
+                    foreach ($lista[$restaurante->id]['Menu'] as $menu) {
+                        if($menu['id'] == $restaurante->menu_id){
+                            $encontradoMenu = true;
+                        }
+                    }
+                    if(!$encontradoMenu){
+                        $lista[$restaurante->id]['Menu'][] =
+                            ['id' => $restaurante->menu_id,
+                            'nombreCategoria' => $restaurante->menu_name,
+                            'platos' =>[]
+                            ];
+                        if ($restaurante->plato_id) {
+                            $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][] =
+                            ['id' => $restaurante->plato_id,
+                            'nombre' => $restaurante->plato_name,
+                            'precio' => $restaurante->plato_precio,
+                            'imagenes' => [],
+                            'alergenos' =>[]
+                            ];
+                            if ($restaurante->fotoplato_id) {
+                                $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][count($lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'])-1]['imagenes'][] =
+                                ['id' => $restaurante->fotoplato_id,
+                                'url' => $restaurante->fotoplato_URL];
+                            }
+                            if ($restaurante->alergenos_id) {
+                                $lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'][count($lista[$restaurante->id]['Menu'][count($lista[$restaurante->id]['Menu'])-1]['platos'])-1]['alergenos'][] =
+                                ['id' => $restaurante->alergenos_id,
+                                'nombre' => $restaurante->alergenos_name,
+                                'icono' => $restaurante->icono];
+                            }
+                        }
+                    }else if($restaurante->plato_id){
+                        foreach ($lista[$restaurante->id]['Menu'] as $index => $menu) {
+                            if ($menu['id'] == $restaurante->menu_id) {
+                                $encontradoPlatos = false;
+                                foreach ($menu['platos'] as $plato) {
+                                    if ($plato['id'] == $restaurante->plato_id) {
+                                        $encontradoPlatos = true;
+                                    }
+                                }
+                                if (!$encontradoPlatos) {
+                                    $menu['platos'][] =
+                                    ['id' => $restaurante->plato_id,
+                                        'nombre' => $restaurante->plato_name,
+                                        'precio' => $restaurante->plato_precio,
+                                        'imagenes' =>[
+                                            ['id' => $restaurante->fotoplato_id,
+                                            'url' => $restaurante->fotoplato_URL]
+                                        ],
+                                        'alergenos' =>[]
+                                    ];
+                                    if ($restaurante->alergenos_id) {
+                                        $menu['platos'][count($menu['platos'])-1]['alergenos'][] =
+                                        ['id' => $restaurante->alergenos_id,
+                                        'nombre' => $restaurante->alergenos_name,
+                                        'icono' => $restaurante->icono];
+                                    }
+                                    $lista[$restaurante->id]['Menu'][$index] = $menu;
+                                }else if($restaurante->alergenos_id){
+                                    foreach ($menu['platos'] as $posicion => $plato) {
+                                        if($plato['id'] == $restaurante->plato_id){
+                                            $encontradoAlergeno = false;
+                                            foreach ($plato['alergenos'] as $key => $alergeno) {
+                                                if ($alergeno['id'] == $restaurante->alergenos_id) {
+                                                    $encontradoAlergeno = true;
+                                                }
+                                            }
+                                            if(!$encontradoAlergeno){
+                                                $plato['alergenos'][] =
+                                                        ['id' => $restaurante->alergenos_id,
+                                                        'nombre' => $restaurante->alergenos_name,
+                                                        'icono' => $restaurante->icono];
+
+                                                $menu['platos'][$posicion] = $plato;
+                                                $lista[$restaurante->id]['Menu'][$index] = $menu;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-    return $lista;
+        return $lista;
     }
 }
