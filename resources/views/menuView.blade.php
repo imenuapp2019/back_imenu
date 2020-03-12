@@ -11,7 +11,7 @@
      var_dump($menus);
 
     @endphp
-
+    @csrf
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -93,5 +93,25 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="modal fade" id="newMenu" tabindex="-1" role="dialog" aria-labelledby="newMenulLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newMenulLabel">Nueva categoría</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="cat_name">Nombre:</label>
+                            <input class="form-control" type="text" placeholder="Pon un nombre para la categoria" id="cat_name" name="cat_name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

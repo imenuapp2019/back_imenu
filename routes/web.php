@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -46,3 +48,10 @@ Route::get('adminplato', 'AdminPlatosController@showPlate');
 =======
 Route::get('menus/{restaurante}','MenuController@index');
 >>>>>>> develop
+
+Route::middleware('auth')->group(function () {
+    Route::get('menus/{restaurante}','MenuController@index');
+    Route::post('menu_do/newMenu','MenuController@newMenu');
+});
+Route::get('platos/{id}',"showPlateController@index");
+
