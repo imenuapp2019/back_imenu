@@ -38,3 +38,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('Restaurante/read/{id}', 'showRestaurant@showRestaurant');
 // Vista usuarios
 Route::get('usuarios/read/{id}', 'showUser@showUser');
+
+
+// Vista panel del plato
+Route::get('adminplato', 'AdminPlatosController@showPlate');
