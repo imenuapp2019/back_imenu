@@ -20,14 +20,20 @@
                 </div>
                 <div class="form-group">
                     <div class="form-check">
+                        <label for="desc">Description:</label>
+                        <input type="text" class="form-control" id="desc" placeholder="Ej: Un restaurante que ..." name="description" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
                         <label for="ltt">Latitude:</label>
-                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Ej: 123.4567" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
+                        <input type="text" class="form-control coordenadas" id="ltt" placeholder="Ej: -123.4567" name="latitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
                         <label for="lgt">Longitude:</label>
-                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" required>
+                        <input type="text" class="form-control coordenadas" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -51,11 +57,9 @@
                     <div class="form-check">
                         <label for="ft">Food type:</label>
                         <select class="form-control" id="ft" name="tipo_id">
-                            <option value="1">Japonesa</option>
-                            <option value="2">Chino</option>
-                            <option value="3">Italiana</option>
-                            <option value="4">Vegana</option>
-                            <option value="5">Arabe</option>
+                            @foreach ($type as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

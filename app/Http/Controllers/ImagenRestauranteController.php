@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\ImagenRestaurante;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ImagenRestauranteController extends Controller
 {
-  public function create($restaurante_id = null,$image = null) {
+    public function create($restaurante_id = null,$image = null) {
         $response = array('error_code' =>400, 'error_msg' => 'Error inserting info');
         $imagen = new ImagenRestaurante();
-
 
         if(!$image) {
             $response['error_msg'] = 'Image is required';
@@ -56,6 +54,7 @@ class ImagenRestauranteController extends Controller
 
             }
         }
+        Log::critical('Function: Delete ImagenRestaurante, Code: '.$response['error_code'].' Message: '.$response['error_msg']);
         return response()->json($response);
     }
 

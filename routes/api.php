@@ -87,8 +87,6 @@ Route::middleware('auth:api')->post('alergeno/create', 'AlergernosController@cre
 Route::middleware('auth:api')->delete('alergeno/delete/{id}', 'AlergernosController@delete');
 //update alergeno
 Route::middleware('auth:api')->put('alergeno/update/{id}', 'AlergernosController@update');
-//show alergenos
-Route::middleware('auth:api')->get('alergeno', 'AlergernosController@getAll');
 
 
 
@@ -97,10 +95,6 @@ Route::middleware('auth:api')->get('alergeno', 'AlergernosController@getAll');
 Route::middleware('auth:api')->post('fotoplato/create', 'PlatePicture@create');
 //Delete foto del plato
 Route::middleware('auth:api')->delete('fotoplato/delete/{id}', 'PlatePicture@delete');
-//update foto del plato
-Route::middleware('auth:api')->put('fotoplato/update/{id}', 'PlatePiocture@update');
-//show foto del plato
-Route::middleware('auth:api')->get('fotoplato', 'PlatePicture@getAll');
 
 
 // Create plato
@@ -109,8 +103,6 @@ Route::middleware('auth:api')->post('plato/create', 'PlateController@create');
 Route::middleware('auth:api')->delete('plato/delete/{id}', 'PlateController@delete');
 //update plato
 Route::middleware('auth:api')->put('plato/update/{id}', 'PlateController@update');
-//show plato
-Route::middleware('auth:api')->get('plato', 'PlateController@getAll');
 
 
 
@@ -121,8 +113,10 @@ Route::middleware('auth:api')->delete('menu/delete/{id}', 'MenuController@delete
 //update menu
 Route::middleware('auth:api')->put('menu/update/{id}', 'MenuController@update');
 
-
-
+//Return Restaurantes
+Route::get('verTodo', 'RestauranteController@principal');
+//Return tipos de comida
+Route::get('tipos', 'RestauranteController@tiposRestaurante');
 
 
 

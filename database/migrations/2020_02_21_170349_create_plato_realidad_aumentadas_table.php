@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatoContieneAlergenosTable extends Migration
+class CreatePlatoRealidadAumentadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePlatoContieneAlergenosTable extends Migration
      */
     public function up()
     {
-        Schema::create('plato_contiene_alergenos', function (Blueprint $table) {
+        Schema::create('plato_realidad_aumentadas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('alergenos_id');
             $table->unsignedBigInteger('plate_id');
-            $table->foreign('alergenos_id')->references('id')->on('alergenos');
+            $table->unsignedBigInteger('realidadaumentada_id');
             $table->foreign('plate_id')->references('id')->on('plate');
+            $table->foreign('realidadaumentada_id')->references('id')->on('realidad_aumentadas');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePlatoContieneAlergenosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plato_contiene_alergenos');
+        Schema::dropIfExists('plato_realidad_aumentadas');
     }
 }

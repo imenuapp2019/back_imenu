@@ -8,4 +8,5 @@ class Plate extends Model
 {
     //
     protected $table = 'plate';
+
 }

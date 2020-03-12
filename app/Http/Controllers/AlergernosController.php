@@ -8,12 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class AlergernosController extends Controller
 {
-    public function getAll() {
-      $alergenos = alergenos::all(['name']);
-      return response()->json($alergenos);
-    }
-
-
     public function create(Request $request) {
         $response = array('error_code' => 400, 'error_msg' => 'Error inserting info' );
         $alergeno = new alergenos;
@@ -27,20 +21,18 @@ class AlergernosController extends Controller
         }else{
             try{
                 $alergeno->name = ucfirst(strtolower($request->name));
-                $alergeno->URL = ($request->URL);
+                $alergeno->URL = $request->URL;
                 $alergeno->save();
                 $response = array('error_code' => 200, 'error_msg' => 'OK');
                 Log::info('Alergeno '.$alergeno->name.' creado');
 
-                 }catch (\Exception $e) {
+            }catch (\Exception $e) {
+                Log::alert('Function: Create Alergeno, Message: '.$e);
+                $response = array('error_code' => 500, 'error_msg' => "Server connection error");
 
-                    Log::alert('Function: Create Alergeno, Message: '.$e);
-                    $response = array('error_code' => 500, 'error_msg' => "Server connection error");
-
-                }
-            } return response()->json($response);
-
-
+            }
+        }
+        return response()->json($response);
     }
 
     public function delete($id) {
@@ -71,7 +63,7 @@ class AlergernosController extends Controller
                   $alergeno->URL = $request->URL ? $request->URL : $alergeno->URL;
                   $alergeno->save();
                   $response = array('error_code' => 200, 'error_msg' => 'OK');
-                  Log::info('Type '.$alergeno->name.' update');
+                  Log::info('Alergeno '.$alergeno->name.' update');
 
             } catch (\Exception $e) {
                 Log::alert('Function: Update Alergeno, Message: '.$e);
@@ -80,11 +72,5 @@ class AlergernosController extends Controller
             }
         }
         return response()->json($response);
-
-
-
     }
-
 }
-
-

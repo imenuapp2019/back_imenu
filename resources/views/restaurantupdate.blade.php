@@ -14,31 +14,37 @@
                     <div class="form-group">
                         <div class="form-check">
                             <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="{{$restaurants->name}}">
+                            <input type="text" class="form-control" id="name" placeholder="Ej: La pequeña plza" name="name" value="{{$restaurants->name}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="add">Address:</label>
-                            <input type="text" class="form-control" id="add" placeholder="Enter address" name="address" value="{{$restaurants->address}}">
+                            <input type="text" class="form-control" id="add" placeholder="Ej: Calle spagueto" name="address" value="{{$restaurants->address}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label for="desc">Description:</label>
+                            <input type="text" class="form-control" id="desc" placeholder="Ej: Un restaurante que ..." name="description" value="{{$restaurants->description}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="ltt">Latitude:</label>
-                            <input type="text" class="form-control" id="ltt" placeholder="Enter latitude" name="latitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
+                            <input type="text" class="form-control" id="ltt" placeholder="Ej: -123.4567" name="latitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->latitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="lgt">Longitude:</label>
-                            <input type="text" class="form-control" id="lgt" placeholder="Enter longitude" name="longitude" pattern="[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
+                            <input type="text" class="form-control" id="lgt" placeholder="Ej: 123.4567" name="longitude" pattern="\-?[0-9]{1,3}\.[0-9]{1,4}" value="{{$restaurants->longitude}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
                             <label for="pn">Phone number:</label>
-                            <input type="text" class="form-control" id="pn" placeholder="Enter Phone number" name="phone_number" pattern="[0-9]{9}" value="{{$restaurants->phone_number}}">
+                            <input type="text" class="form-control" id="pn" placeholder="Ej: 684305799" name="phone_number" pattern="[0-9]{9}" value="{{$restaurants->phone_number}}">
                         </div>
                     </div>
                     <div class="container">
