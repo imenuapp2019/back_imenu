@@ -39,4 +39,10 @@ Route::get('restaurante/read/{id}', 'showRestaurant@showRestaurant');
 // Vista usuarios
 Route::get('usuarios/read/{id}', 'showUser@showUser');
 
+<<<<<<< HEAD
+
+// Vista panel del plato
+Route::get('adminplato', 'AdminPlatosController@showPlate');
+=======
 Route::get('menus/{restaurante}','MenuController@index');
+>>>>>>> develop
