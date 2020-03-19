@@ -1,10 +1,15 @@
 $("document").ready(function(){
     //Activar todos los tooltips de la pagina
     $('[data-toggle="tooltip"]').tooltip();
+    var modalPlato = $("#pruebamodal");
+   // $("[name = menuPlate]");
 
 //Acciones para cada fila de los platos del menu//
    $(".plate").dblclick(function(){
-      console.log($(this).attr('id'));
+       id = $(this).attr('id');
+       console.log(id);
+       modalEditPlato(id)
+
    });
 
     //Accion del boton añadir nueva categoria//
@@ -72,6 +77,29 @@ $(".quit_plate").click(function(){
            }
        })
    }
+   function getBD(url,data,options = null){
+       $.ajaxSetup({
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           }
+       });
+       $.ajax({
+           url: url,
+           data: data,
+           dataType: json,
+           success: function(response){
+               alert("exito");
+           },
+           statusCode:{
+               200: function () {
+                   alert("200 exito");
+               },
+               500: function(){
+                   alert("Server Error")
+               }
+           }
+       })
+   }
    function edit_plate(id,action){
        console.log($("#"+id+" .name_plate").text())
        switch (action) {
@@ -86,6 +114,42 @@ $(".quit_plate").click(function(){
                console.log("en contstruccion");
                break;
        }
+   }
+
+   function modalEditPlato(id){
+       $("#desc_plate [name = name]").val($("#"+id+" .name_plate").text());
+       $("#desc_plate img").attr('src',$("#"+id+" .plate_img").attr("src"));
+       $("#desc_plate [name = quantity ]").val($("#"+id+" .pricePlate").text().slice(0,-1));
+       $.ajaxSetup({
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           }
+       });
+       $.ajax({
+           url: 'menus_do/getMenus',
+           type: 'post',
+           data: {'id':id},
+           dataType: 'json',
+           success: function(response){
+               console.log(response);
+               for (var value in response){
+                   console.log(response[value].name);
+                   $("#menus").append("<li class='list-group-item'>" +
+                       response[value].name+
+                 "</li> <button class=\"btn btn-light\" ><img src='../images/minus.png'></button>")
+               };
+
+           },
+           statusCode:{
+               200: function () {
+                   alert("200 exito");
+               },
+               500: function(){
+                   alert("Server Error")
+               }
+           }
+       })
+       modalPlato.modal();
    }
 
 });

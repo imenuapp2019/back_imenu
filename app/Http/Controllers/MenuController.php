@@ -137,4 +137,17 @@ class MenuController extends Controller
             }
         }
 
+        public function getMenusAssign(Request $r){
+            try{
+                $menus = DB::table('menu_platos as mp')->
+                join('menu as m','mp.menu_id','m.id')->
+                    where('plato_id',$r->id)->
+                select('m.id','m.name')->
+                get();
+                return response()->json($menus,200);
+            }catch (\Exception $e){
+                return response()->json($e->getMessage(),200);
+            }
+        }
+
 }
