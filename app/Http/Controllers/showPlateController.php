@@ -24,7 +24,7 @@ class showPlateController extends Controller
             if(isset($platos[$item->plato_id])){
                 $platos[$item->plato_id]['platos'][$item->menu_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'alergenos'=>$item->alergenos];
             }else{
-                $menus[$item->menu_id] = [
+                $menus[$item->plato_id] = [
                     'nombre' => $item->plato_name,
                     'menus' => []
                 ];

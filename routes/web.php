@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -39,10 +41,18 @@ Route::get('restaurante/read/{id}', 'showRestaurant@showRestaurant');
 // Vista usuarios
 Route::get('usuarios/read/{id}', 'showUser@showUser');
 
-<<<<<<< HEAD
+
 
 // Vista panel del plato
 Route::get('adminplato', 'AdminPlatosController@showPlate');
-=======
+
 Route::get('menus/{restaurante}','MenuController@index');
->>>>>>> develop
+
+Route::middleware('auth')->group(function () {
+    Route::get('menus/{restaurante}','MenuController@index');
+    Route::post('menus/menu_do/newMenu','MenuController@newMenu');
+    Route::post('menus/menus_do/getMenus','MenuController@getMenusAssign');
+});
+
+Route::get('platos/{id}',"showPlateController@index");
+

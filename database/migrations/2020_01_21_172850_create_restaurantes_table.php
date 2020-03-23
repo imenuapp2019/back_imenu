@@ -17,8 +17,8 @@ class CreateRestaurantesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('address');
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->float('latitude',10,6);
+            $table->float('longitude',10,6);
             $table->integer('phone_number');
             $table->string('description');
             $table->timestamps();

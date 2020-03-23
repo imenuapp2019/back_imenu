@@ -6,6 +6,7 @@ use App\Plate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
 
 class MenuController extends Controller
 {
@@ -76,6 +77,11 @@ class MenuController extends Controller
             return response()->json($response);
         }
 
+    /**
+     * Vista menus de restarurante con sus platos.
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
         public function index($slug){
             $result = DB::table('menu_platos as mp')->
             leftJoin('plate as p','mp.plato_id','p.id')->
@@ -100,6 +106,48 @@ class MenuController extends Controller
                 }
             }
             return view('menuView',['menus'=> $menus]);
+        }
+        public function newMenu(Request $request){
+                try{
+                    $menu = new Menu();
+                    $menu->name = $request->name;
+                    $menu->restaurante_id = $request->local;
+                    $menu->save();
+                    return response()->json("ok",200);
+                }catch (Exception $e){
+                    return response()->json($e->getMessage(),500);
+                }
+
+        }
+        public function editMenu(Request $request){
+            try{
+                Menu::where('id',$request->id)->update(['name'=>$request->name]);
+                return response()->json("ok",200);
+            }catch (\Exception $e){
+                return response()->json($e->getMessage(),500);
+            }
+        }
+
+        public function quitPlatefromMenu(Request $request){
+            try{
+                $borrados = DB::table('menu_platos')->where('menu_id',$request->menu_id)->where('plato_id',$request->plate_id)->delete();
+                return response()->json($borrados,200);
+            }catch(\Exception $e){
+                return response()->json($e->getMessage(),500);
+            }
+        }
+
+        public function getMenusAssign(Request $r){
+            try{
+                $menus = DB::table('menu_platos as mp')->
+                join('menu as m','mp.menu_id','m.id')->
+                    where('plato_id',$r->id)->
+                select('m.id','m.name')->
+                get();
+                return response()->json($menus,200);
+            }catch (\Exception $e){
+                return response()->json($e->getMessage(),200);
+            }
         }
 
 }

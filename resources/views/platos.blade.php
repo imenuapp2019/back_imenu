@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<<<<<<< HEAD
     <link rel="stylesheet" href=" {{asset('css/menu.css')}}" type="text/css">
     <script src="{{asset('js/menus.js')}}"></script>
 
@@ -34,3 +35,9 @@
     </div>
 @endsection
 
+=======
+ @php
+ var_dump($platos);
+ @endphp
+    @endsection
+>>>>>>> 93bbb19860b8c518916084e8c179d0d31147189b
