@@ -1,12 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Platos</title>
-</head>
-<body>
+@extends('layouts.app')
+@section('content')
+    <link rel="stylesheet" href=" {{asset('css/menu.css')}}" type="text/css">
+    <script src="{{asset('js/menus.js')}}"></script>
 
-</body>
-</html>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                @if(isset($`plato``['platos']))
+                    <div class="container">
+                        @foreach ($plato['platos'] as $key => $plato)
+                            <div class="row border-2 plate" id="{{$key}}">
+                                <div class="col-md-3">
+                                    <img class="plate_img" src="{{$plato['url_photo']}}">
+                                </div>
+                                <div class="col-md-3 justify-content-center"><p class="name_plate">{{$plato['nombre']}}</p></div>
+                                <div class="col-md-3 justify-content-center"><p>{{$plato['precio']}}€</p></div>
+                                <div class="col-md-3 justify-content-center">
+                                    <button class="btn edit_plate" id="plate_{{$key}}">
+                                        <img src="{{asset('images/edit.png')}}">
+                                    </button>
+                                    <button class="btn quit_plate" id="plato_{{$key}}">
+                                        <img src="{{asset('images/minus.png')}}">
+                                    </button>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+            </div>
+    </div>
+@endsection
+
