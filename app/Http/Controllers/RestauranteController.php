@@ -373,6 +373,10 @@ class RestauranteController extends Controller
                 }
             }
         }
-        return $lista;
+        $loqsea = [];
+        foreach ($lista as $key => $value) {
+            array_push($loqsea,$value);
+        }
+        return $loqsea;
     }
 }
