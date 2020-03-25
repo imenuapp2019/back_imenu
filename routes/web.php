@@ -20,27 +20,31 @@ Route::get('/', function () {
 Auth::routes();
 //Ruta Web para devolver la vista Home desde web
 Route::get('home', 'HomeController@index')->name('home');
-//Ruta Web para actualizar los datos de un restaurante
-Route::middleware('auth')->get('updateRestaurante/{id}', 'RestUpdateViewController@index')->name('update');
-//Ruta Web para crear un restaurante
-Route::get('createRestaurante', 'ControllerFormularioResrtaurante@callController');
+
 
 //Create restaurante
 Route::middleware('auth')->post('restaurantes/create', 'RestauranteController@create');
 //Delete restaurante
-Route::middleware('auth')->get('restaurantes/delete/{id}', 'RestauranteController@delete')->name('delete');
+Route::middleware('auth')->get('restaurantes/delete/{id}', 'RestauranteController@delete')->name('delete_restaurante');
 //Update restaurante
 Route::middleware('auth')->match(['put', 'post'], 'restaurantes/update/{id}', 'RestauranteController@update');
+
+
 Route::post('register', 'Auth\RegisterController@create');
 
 Route::post('/password.email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::middleware('auth')->prefix('restaurantes')->group(function () {
 // Vista del restaurante
-Route::get('restaurante/read/{id}', 'showRestaurant@showRestaurant');
+    Route::get('read/{id}', 'showRestaurant@showRestaurant')->name('ver_restaurante');
+    //Ruta Web para actualizar los datos de un restaurante
+    Route::middleware('auth')->get('updateRestaurante/{id}', 'RestUpdateViewController@index')->name('editar_restaurante');
+//Ruta Web para crear un restaurante
+    Route::get('createRestaurante', 'ControllerFormularioResrtaurante@callController')->name('create_restaurante');
+});
 // Vista usuarios
 Route::get('usuarios/read/{id}', 'showUser@showUser');
-
 
 
 // Vista panel del plato
@@ -48,11 +52,15 @@ Route::get('adminplato', 'AdminPlatosController@showPlate');
 
 Route::get('menus/{restaurante}','MenuController@index');
 
-Route::middleware('auth')->group(function () {
-    Route::get('menus/{restaurante}','MenuController@index');
-    Route::post('menus/menu_do/newMenu','MenuController@newMenu');
-    Route::post('menus/menus_do/getMenus','MenuController@getMenusAssign');
+Route::middleware('auth')->prefix('menus')->group(function () {
+    Route::get('{restaurante}','MenuController@index')->name('view_menu');
+    Route::post('menu_do/newMenu','MenuController@newMenu');
+    Route::post('menus_do/getMenus','MenuController@getMenusAssign');
 });
 
 Route::get('platos/{id}',"showPlateController@index");
+
+Route::get('/prueba', function () {
+    return view('prueba');
+});
 

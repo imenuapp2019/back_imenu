@@ -1,4 +1,8 @@
-$("document").ready(function(){
+$(document).ready(function(){
+    $('.js-example-basic-multiple').select2({
+        placeholder: 'Select an option'
+    });
+
     //Activar todos los tooltips de la pagina
     $('[data-toggle="tooltip"]').tooltip();
     var modalPlato = $("#pruebamodal");
@@ -11,6 +15,8 @@ $("document").ready(function(){
        modalEditPlato(id)
 
    });
+
+
 
     //Accion del boton añadir nueva categoria//
 $("[name = newMenu]").click(function(){
@@ -132,17 +138,17 @@ $(".quit_plate").click(function(){
            dataType: 'json',
            success: function(response){
                console.log(response);
+               $("#menus").empty();
                for (var value in response){
                    console.log(response[value].name);
                    $("#menus").append("<li class='list-group-item'>" +
                        response[value].name+
-                 "</li> <button class=\"btn btn-light\" ><img src='../images/minus.png'></button>")
+                 "<button id=class=\"btn btn-light\" ><img src='../images/minus.png'></button></li>")
                };
 
            },
            statusCode:{
                200: function () {
-                   alert("200 exito");
                },
                500: function(){
                    alert("Server Error")

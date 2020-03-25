@@ -10,13 +10,22 @@
     <title>{{ config('app.name', 'iMenu') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  {{--  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>--}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" type="text/css"/>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
+    <script type="text/javascript" src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    {{--<link rel="stylesheet" href=" {{asset('css/fondo.css')}}" type="text/css">--}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -55,8 +64,9 @@
                                 </a>
                             </div>
                         </li>
+                        @if(Request::is('restaurantes/*'))
                         <li class="nav-item dropdown">
-                            <a id="menuDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a id="menuDropdown" class="nav-link" href="{{route('view_menu',['id'=>$restaurante->id])}}">
                                 Menu <span class="caret"></span>
                             </a>
                         </li>
@@ -65,6 +75,7 @@
                                 Dish <span class="caret"></span>
                             </a>
                         </li>
+                            @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
