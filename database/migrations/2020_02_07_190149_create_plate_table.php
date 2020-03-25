@@ -16,6 +16,7 @@ class CreatePlateTable extends Migration
         Schema::create('plate', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('description');
             $table->float('price');
             $table->timestamps();
 
