@@ -58,9 +58,13 @@ Route::middleware('auth')->prefix('menus')->group(function () {
     Route::post('menus_do/getMenus','MenuController@getMenusAssign');
 });
 
-Route::get('platos/{id}',"showPlateController@index");
-
-Route::get('/prueba', function () {
-    return view('prueba');
+Route::middleware('auth')->prefix('platos')->group(function(){
+    Route::get('{id}',"showPlateController@index");
 });
+Route::middleware('auth')->prefix('menus/platos_do')->group(function(){
+    Route::get('alergenos',"PlateController@getAlergenos");
+    //Route::post('set_alergenos',"showPlateController@index");
+});
+
+
 
