@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Plate;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PlateController extends Controller
@@ -80,4 +82,59 @@ class PlateController extends Controller
         }
         return response()->json($response);
     }
+
+
+
+    //Seccion para peticiones ajax via web//
+    public function getAlergenos(Request $r){
+        try{
+            $alergenos =  DB::table('plato_contiene_alergenos as pa')
+                ->join('alergenos as a', 'a.id','=','pa.alergenos_id')
+                ->where('pa.plate_id',$r->plate_id)
+                ->select(['pa.id','a.name','a.url'])
+                ->get();
+            return response()->json($alergenos,200);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+
+    }
+
+     public function savePlate(Request $r){
+        /* var_dump($r->plate_id);
+         var_dump($r->image_plate);
+         var_dump($r->message);
+         var_dump($r->alergenos);*/
+
+        try{
+           $plate = Plate::find($r->plate_id);
+            $plate->price = $r->quantity;
+            $plate->save();
+            //Asign menu to plate
+            if(!empty($r->menus)){
+                DB::table('menu_platos')->where('plato_id',$r->plate_id)->updateOrInsert(['menu_id' =>$r->menus]);
+            }
+            if(!empty($alergenos)){
+                //Asign alergenos to plate
+                $alergenos = explode(',',$r->alergenos);
+                foreach ($alergenos as $al){
+                    DB::table('plato_contiene_alergenos')->insertOrIgnore(['alergenos_id' =>$al,'plate_id'=>$r->plate_id]);
+                }
+            }
+            if(!is_null($r->image_plate)){
+              // print($r->image_plate->getClientOriginalName());
+                DB::table('foto_plato')->where('plate_id',$r->plate_id)->update(['URL'=>$r->image_plate->getClientOriginalName()]);
+            }
+            if(!empty($r->menus)){
+                $menus = explode(',',$r->menus);
+                foreach ($menus as $menu) {
+                    DB::table('menu_platos')->insertOrIgnore(['menu_id' => $menu,'plato_id'=>$r->plate_id]);
+                }
+            }
+            return response()->json("ok",200);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+
+     }
 }

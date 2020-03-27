@@ -95,7 +95,7 @@ class MenuController extends Controller
             $menus = [];
             $menuplato = BackMenu::getMenu($slug);
 
-
+            $plates = BackMenu::getPlatesFromRestaurant($slug);
             foreach ($result as $item){
                 if(isset($menus[$item->menu_id])){
                     $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url];
@@ -109,7 +109,7 @@ class MenuController extends Controller
                     }
                 }
             }
-            return view('menuView',['menus'=> $menus, 'menuplato'=> $menuplato]);
+            return view('menuView',['menus'=> $menus, 'menuplato'=> $menuplato,'plates'=>$plates]);
 
         }
         public function newMenu(Request $request){

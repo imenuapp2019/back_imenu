@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $('.js-example-basic-multiple').select2({
-        placeholder: 'Select an option'
+        placeholder: 'Selecciona uno o varios alergenos',
+        width: 'resolve',
+        closeOnSelect: false
     });
 
     //Activar todos los tooltips de la pagina
@@ -16,7 +18,7 @@ $(document).ready(function(){
 
    });
 
-
+   $("#save").click(save);
 
     //Accion del boton añadir nueva categoria//
 $("[name = newMenu]").click(function(){
@@ -59,31 +61,77 @@ $(".quit_plate").click(function(){
 
     edit_plate(id,'quit');
 });
+ $(".addPlate").click(function(){
+     $("#asign_plate").modal();
+ });
 
-   function postBD(url,data,options = null){
+ $(".add_plate").click(function(){
+     var id = $(this).attr('id');
+
+ });
+
+$("[name = image_plate]").change(function(){
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    if(fileName == ""){
+        $("#image_plate").show();
+    }else{
+        $("#image_plate").hide();
+    }
+});
+
+   function postBD(url,data,options = null,callback){
        $.ajaxSetup({
            headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            }
        });
-       $.ajax({
-           url: url,
-           data: data,
-           dataType: json,
-           success: function(response){
-               alert("exito");
-           },
-           statusCode:{
-               200: function () {
-                   alert("200 exito");
+       if(options === "formData"){
+           $.ajax({
+               url: url,
+               data: data,
+               type: 'post',
+               enctype: 'multipart/form-data',
+               contentType: false,
+               processData: false,
+               success: function(response){
+                   if(callback != null){
+                       callback(response)
+                   }
                },
-               500: function(){
-                   alert("Server Error")
+               statusCode:{
+                   200: function () {
+
+                   },
+                   500: function(){
+                       alert("Server Error")
+                   }
                }
-           }
-       })
+           })
+       }else{
+           $.ajax({
+               url: url,
+               data: data,
+               dataType: 'json',
+               type: 'post',
+               success: function(response){
+                   if(callback != null){
+                       callback(response)
+                   }
+               },
+               statusCode:{
+                   200: function () {
+
+                   },
+                   500: function(){
+                       alert("Server Error")
+                   }
+               }
+           })
+       }
+
    }
-   function getBD(url,data,options = null){
+   function getBD(url,data,options = null,callback){
        $.ajaxSetup({
            headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -92,13 +140,13 @@ $(".quit_plate").click(function(){
        $.ajax({
            url: url,
            data: data,
-           dataType: json,
+           dataType: 'json',
            success: function(response){
                alert("exito");
            },
            statusCode:{
-               200: function () {
-                   alert("200 exito");
+               200: function (response) {
+                   callback(response);
                },
                500: function(){
                    alert("Server Error")
@@ -123,6 +171,7 @@ $(".quit_plate").click(function(){
    }
 
    function modalEditPlato(id){
+       $("#plate_id").val(id);
        $("#desc_plate [name = name]").val($("#"+id+" .name_plate").text());
        $("#desc_plate img").attr('src',$("#"+id+" .plate_img").attr("src"));
        $("#desc_plate [name = quantity ]").val($("#"+id+" .pricePlate").text().slice(0,-1));
@@ -143,19 +192,39 @@ $(".quit_plate").click(function(){
                    console.log(response[value].name);
                    $("#menus").append("<li class='list-group-item'>" +
                        response[value].name+
-                 "<button id=class=\"btn btn-light\" ><img src='../images/minus.png'></button></li>")
+                 "<button id=class=\"btn btn-light\"><img src='../images/minus.png'></button></li>")
                };
+               getBD('platos_do/alergenos',{plate_id : id},null,function(response){
+                   $("#alergenos_list").empty();
+                  for(var value in response){
+                      $("#alergenos_list").append("<li class='list-group-item'>" +
+                          response[value].name+
+                          "<button id="+response[value].id+" class=\"btn btn-light\"><img src='../images/minus.png'></button></li>")
+                  }
+               });
 
            },
            statusCode:{
-               200: function () {
-               },
                500: function(){
                    alert("Server Error")
                }
            }
        })
        modalPlato.modal();
+   }
+
+    /**
+     * Guardar cambios del modal editar plato.
+     */
+   function save(){
+       var detallesPlato = new FormData($("#desc_plate")[0]);
+       var alergenos = $("#alergenos").select2('val');
+       detallesPlato.append('alergenos',alergenos);
+       detallesPlato.append('plate_id',$("#plate_id").val());
+       detallesPlato.append('menus',$("#menu").select2('val'));
+        postBD('platos_do/save',detallesPlato,"formData",function(data){
+            //location.reload();
+        });
    }
 
 });

@@ -56,14 +56,19 @@ Route::middleware('auth')->prefix('menus')->group(function () {
     Route::get('{restaurante}','MenuController@index')->name('view_menu');
     Route::post('menu_do/newMenu','MenuController@newMenu');
     Route::post('menus_do/getMenus','MenuController@getMenusAssign');
-});
 
+});
+//VISTA PLATOS
 Route::middleware('auth')->prefix('platos')->group(function(){
     Route::get('{id}',"showPlateController@index");
+
 });
+
+//ACTIONS VISTA MENUS
 Route::middleware('auth')->prefix('menus/platos_do')->group(function(){
-    Route::get('alergenos', "PlateController@getAlergenos");
     Route::get('menus', "PlateController@getMenu");
+    Route::get('alergenos',"PlateController@getAlergenos");
+    Route::post('save',"PlateController@savePlate");
     //Route::post('set_alergenos',"showPlateController@index");
 });
 
