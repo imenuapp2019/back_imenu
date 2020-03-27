@@ -1,11 +1,14 @@
 @extends('layouts.app')
 @section('content')
 
+
     <link rel="stylesheet" href=" {{asset('css/menu.css')}}" type="text/css">
     @php
 use App\Helpers\BackMenu;
      var_dump($menus);
  $options = BackMenu::getAlergenos();
+
+
 
     @endphp
     @csrf
@@ -170,13 +173,30 @@ use App\Helpers\BackMenu;
                                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                             Asignar Menús
                                         </a>
+
                                     </div>
                                 </div>
                                 <div class="row collapse" id="collapseExample">
                                     <div class="col-md-12 form-group">
-                                        <select class="form-control" name="menuPlate">
-                                            <option value="">Selecciona categoría</option>
+                                        <select id="menu" class="js-example-basic-multiple" style="width: 100%" name="menu[]" multiple="multiple">
+
+
+
+
+
+
+                                            @foreach($menuplato as $id => $menu)
+                                                <option value="{{$menu->id}}">{{$menu->name}}</option>
+                                                  @endforeach
+
+
+
+
                                             {{--Imprimir los menus del restaurante--}}
+
+                                            {{--creación del listado de menú al seleccionar--}}
+
+
                                         </select>
                                     </div>
 

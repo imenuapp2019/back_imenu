@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Helpers\BackMenu;
 use App\Menu;
 use App\Plate;
 use Illuminate\Http\Request;
@@ -91,6 +93,8 @@ class MenuController extends Controller
             where('m.restaurante_id',$slug)->get();
 
             $menus = [];
+            $menuplato = BackMenu::getMenu($slug);
+
 
             foreach ($result as $item){
                 if(isset($menus[$item->menu_id])){
@@ -105,7 +109,8 @@ class MenuController extends Controller
                     }
                 }
             }
-            return view('menuView',['menus'=> $menus]);
+            return view('menuView',['menus'=> $menus, 'menuplato'=> $menuplato]);
+
         }
         public function newMenu(Request $request){
                 try{
