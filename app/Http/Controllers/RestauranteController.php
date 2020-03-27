@@ -214,6 +214,7 @@ class RestauranteController extends Controller
                     'latitud' => $restaurante->latitude,
                     'longitud' => $restaurante->longitude,
                     'telefono' => $restaurante->phone_number,
+                    'tipo' => $restaurante->type,
                     'imagenes' => [],
                     'RRSS' =>[],
                     'Menu' =>[]
