@@ -3,8 +3,9 @@
 
     <link rel="stylesheet" href=" {{asset('css/menu.css')}}" type="text/css">
     @php
-
+use App\Helpers\BackMenu;
      var_dump($menus);
+ $options = BackMenu::getAlergenos();
 
     @endphp
     @csrf
@@ -13,7 +14,7 @@
             <div class="card-header">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6"><h2>Categoria</h2></div>
+                        <div class="col-md-6"><h2>Menús</h2></div>
                         <div class="col-md-6 align-items-end">
                             <button class="btn btn-success" name="newMenu" data-toggle="tooltip" data-placement="top" title="Añadir categoria">
                                 <img src="{{asset('images/plus.png')}}"/>
@@ -112,6 +113,7 @@
         </div>
     </div>
 
+{{--Modal editar plato y asignar menus y alergenos al plato --}}
     <div class="modal fade" id="pruebamodal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -122,7 +124,6 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#plato" data-toggle = "tab">Plato</a>
-
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#galeria" data-toggle = "tab">Menús asignados</a>
@@ -134,24 +135,23 @@
 
                         <div class = "tab-content">
                             <div id="plato" class="container tab-pane active"><br>
-
+                            <input type="text" class="d-none" name="op">
                                 <form id="desc_plate">
                                     <div class="form-group">
                                         <label for="plato">Nombre del plato:</label>
-                                        <input type="text" class="form-control" id="name" name="name">
+                                        <input type="text" class="form-control" id="name" name="name" disabled>
                                     </div>
                                     <div class="file-field">
                                         <div class="z-depth-1-half mb-4">
-                                            <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" class="img-fluid"
+                                            <img id="image_plate" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" class="img-fluid"
                                                  alt="example placeholder">
                                         </div>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="btn btn-mdb-color btn-rounded float-left">
-
-                                                <input type="file">
-                                            </div>
+                                        <div class="custom-file d-flex justify-content-center">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                                <input type="file" name="image_plate" class="custom-file-input">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="plato">Descripción del plato:</label>
                                         <textarea class="form-control" name="message" rows="10"></textarea>
@@ -161,16 +161,7 @@
                                         <label for="quantity">Precio (Entre 1 y 700€):</label>
                                         <input type="number"  id="quantity" name="quantity" min="1" max="700" >€
                                     </div>
-
-
-
-
-
-
-                                    <button type="submit" class="btn btn-primary">Guardar plato</button>
                                 </form>
-
-
 
                             </div>
                             <div id="galeria" class="container tab-pane fade"><br>
@@ -194,53 +185,67 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <ul class="list-group list-group-flush" id="menus">
-                                            <li class="list-group-item">
+                                            {{--<li class="list-group-item">
                                                 Menú 1
                                                 <button class="btn btn-light"><img src="{{asset('images/minus.png')}}"></button>
-                                            </li>
+                                            </li>--}}
                                         </ul>
                                     </div>
                                 </div>
-
-                                <div class = "row">
-                                    <button type="submit" class="btn btn-primary">Guardar Menú</button>
-                                </div>
                             </div>
                             <div id="alergenos" class="container tab-pane fade"><br>
-                                <h3>Alergenos</h3>
-
                                 <div class="row">
                                     <div class="col-md-12">
 
-                                        {{--<p>
+                                        <p>
                                             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                Alergenos
+                                                Añadir alérgeno
                                             </a>
 
-                                        </p>--}}
-
-                                        <select id="alergenos" class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                            <option value="AL">Alabama</option>
-                                            <option value="WY">Wyoming</option>
-                                        </select>
-                                       {{-- <div class="collapse" id="collapseExample">
+                                        </p>
 
 
-                                        </div>--}}
+                                        <div class="collapse" id="collapseExample">
+                                            <select id="alergenos" class="js-example-basic-multiple"  style="width: 100%" name="alergenos[]" multiple="multiple">
+                                              @foreach($options as $id => $alergeno)
+                                                <option value="{{$alergeno->id}}">{{$alergeno->name}}</option>
+                                                  @endforeach
+                                            </select>
 
-
-
-                                        <button class="btn-save btn btn-primary btn-sm" style="margin-left: 60px">Guardar</button>
+                                        </div>
 
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul class="list-group list-group-flush" id="alergenos_list">
 
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
 
 
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="asign_plate" tabindex="-1" role="dialog" aria-labelledby="asign_plate" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newMenulLabel">Añadir plato</h5>
+                </div>
+                <div class="modal-body">
+                   <div class="container">
+                       <div class="row"></div>
+                   </div>
                 </div>
             </div>
         </div>
