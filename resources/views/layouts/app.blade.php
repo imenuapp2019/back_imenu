@@ -65,11 +65,13 @@
                             </div>
                         </li>
                         @if(Request::is('restaurantes/*'))
+                            @if(isset($restaurante))
                         <li class="nav-item dropdown">
                             <a id="menuDropdown" class="nav-link" href="{{route('view_menu',['id'=>$restaurante->id])}}">
                                 Menu <span class="caret"></span>
                             </a>
                         </li>
+                            @endif
                         <li class="nav-item dropdown">
                             <a id="dishDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Dish <span class="caret"></span>
