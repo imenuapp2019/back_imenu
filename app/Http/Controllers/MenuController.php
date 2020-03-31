@@ -96,7 +96,7 @@ class MenuController extends Controller
             $menuplato = BackMenu::getMenu($slug);
 
             $plates = BackMenu::getPlatesFromRestaurant($slug);
-            if(!is_null($result) && count($result)>0){
+            if(!is_null($result)){
                 foreach ($result as $item){
                     if(isset($menus[$item->menu_id])){
                         $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
