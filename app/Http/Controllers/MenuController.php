@@ -96,20 +96,24 @@ class MenuController extends Controller
             $menuplato = BackMenu::getMenu($slug);
 
             $plates = BackMenu::getPlatesFromRestaurant($slug);
-            foreach ($result as $item){
-                if(isset($menus[$item->menu_id])){
-                    $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
-                }else{
-                    $menus[$item->menu_id] = [
-                        'nombre' => $item->menu_name,
-                        'platos' => []
-                    ];
-                    if($item->plato_id){
+            if(!is_null($result) && count($result)>0){
+                foreach ($result as $item){
+                    if(isset($menus[$item->menu_id])){
                         $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
+                    }else{
+                        $menus[$item->menu_id] = [
+                            'nombre' => $item->menu_name,
+                            'platos' => []
+                        ];
+                        if($item->plato_id){
+                            $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
+                        }
                     }
                 }
+                return view('menuView',['restaurant_id'=>$slug,'menus'=> $menus, 'menuplato'=> $menuplato,'plates'=>$plates]);
+            }else{
+                return abort(404);
             }
-            return view('menuView',['restaurant_id'=>$slug,'menus'=> $menus, 'menuplato'=> $menuplato,'plates'=>$plates]);
 
         }
         public function newMenu(Request $request){
