@@ -7,6 +7,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
 
 class PlateController extends Controller
 {
@@ -110,31 +111,63 @@ class PlateController extends Controller
            $plate = Plate::find($r->plate_id);
             $plate->price = $r->quantity;
             $plate->save();
+
             //Asign menu to plate
             if(!empty($r->menus)){
-                DB::table('menu_platos')->where('plato_id',$r->plate_id)->updateOrInsert(['menu_id' =>$r->menus]);
+                DB::table('menu_platos')->updateOrInsert(['menu_id' =>$r->menus,'plato_id'=>$r->plate_id]);
             }
-            if(!empty($alergenos)){
+            if(!empty($r->alergenos)){
                 //Asign alergenos to plate
                 $alergenos = explode(',',$r->alergenos);
                 foreach ($alergenos as $al){
-                    DB::table('plato_contiene_alergenos')->insertOrIgnore(['alergenos_id' =>$al,'plate_id'=>$r->plate_id]);
+                   $repeated = (count(DB::table('plato_contiene_alergenos')->where('alergenos_id' ,$al)->where('plate_id',$r->plate_id)->get()) > 0 )? true: false;
+                    if($repeated != true){
+                        DB::table('plato_contiene_alergenos')->insertOrIgnore(['alergenos_id' =>$al,'plate_id'=>$r->plate_id]);
+                    }
                 }
             }
+
             if(!is_null($r->image_plate)){
               // print($r->image_plate->getClientOriginalName());
                 DB::table('foto_plato')->where('plate_id',$r->plate_id)->update(['URL'=>$r->image_plate->getClientOriginalName()]);
             }
             if(!empty($r->menus)){
                 $menus = explode(',',$r->menus);
+
                 foreach ($menus as $menu) {
                     DB::table('menu_platos')->insertOrIgnore(['menu_id' => $menu,'plato_id'=>$r->plate_id]);
                 }
             }
             return response()->json("ok",200);
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return response()->json($e->getLine()." ".$e->getMessage(),500);
         }
 
      }
+      public function addPlateIntoMenu(Request $r){
+        try{
+            $inserts = DB::table('menu_platos')->insertOrIgnore(['menu_id'=>$r->menu_id,'plato_id'=>$r->plate_id]);
+            if($inserts >0){
+                return response()->json("ok",200);
+            }else{
+                return response()->json("ok, within changes",200);
+            }
+        }catch(Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+      }
+
+      public function dropAlergen(Request $r){
+        try{
+            $drop = DB::table('plato_contiene_alergenos')->where('id',$r->id)->delete();
+            if($drop >0){
+                return response()->json("ok",200);
+            }else{
+                return response()->json("ok, no changes",200);
+            }
+        }catch (\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+      }
+
 }

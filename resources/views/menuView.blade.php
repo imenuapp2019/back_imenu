@@ -6,6 +6,7 @@
         $options = BackMenu::getAlergenos();
     @endphp
     @csrf
+    <input class="d-none" type="text" id="restaurant_id" value="{{$restaurant_id}}">
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -24,47 +25,47 @@
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="accordion col-md-12" id="accordion_menus">
-                        @foreach($menus as $key=> $menu)
-                            <div class="card">
-                                <div class="card-header" id="heading_{{$key}}">
+                        @foreach($menus as $menu_key=> $menu)
+                            <div class="card" id="{{$menu_key}}">
+                                <div class="card-header" id="heading_{{$menu_key}}">
                                     <h2 class="mb-0">
                                         <div class="categoria_name">
                                             <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapse_{{$key}}" aria-expanded="true"
-                                                    aria-controls="collapse_{{$key}}" name="name_menu">
+                                                    data-target="#collapse_{{$menu_key}}" aria-expanded="true"
+                                                    aria-controls="collapse_{{$menu_key}}" name="name_menu_{{$menu_key}}">
                                                 {{$menu['nombre']}}
                                             </button>
                                         </div>
 
-                                        <div class="d-none name_categoria" id="name_{{$key}}">
-                                            <input type="text" placeholder="Nombre de la categoria"/>
-                                            <button class="btn-dark btn-info btn-category" type="button"
-                                                    name="cat_{{$key}}">
+                                        <div class="d-none name_categoria" id="name_{{$menu_key}}">
+                                            <input type="text" placeholder="Nombre de la categoria" name="cat_name_{{$menu_key}}"/>
+                                            <button class="editar_categoria btn-dark btn-info btn-category" type="button"
+                                                    name="cat_{{$menu_key}}">
                                                 Cambiar
                                             </button>
                                         </div>
-                                        <button class="btn btn-edit" name="{{$key}}" data-toggle="tooltip"
+                                        <button class="btn btn-edit" name="{{$menu_key}}" data-toggle="tooltip"
                                                 data-placement="top" title="Editar categoría">
                                             <img src="{{asset('images/edit.png')}}"/>
                                         </button>
-                                        <button class="btn btn-drop" name="{{$key}}" data-toggle="tooltip"
+                                        <button class="btn btn-drop" name="{{$menu_key}}" data-toggle="tooltip"
                                                 data-placement="top" title="Eliminar esta categoría">
                                             <img src="{{asset('images/bin.png')}}"/>
                                         </button>
-                                        <button class="addPlate btn btn-warning" data-toggle="tooltip"
+                                        <button class="addPlate btn btn-warning" name="add-plate-menu_{{$menu_key}}" data-toggle="tooltip"
                                                 data-placement="top" title="Añadir plato">
                                             <img src="{{asset('images/plus.png')}}">
                                         </button>
                                     </h2>
                                 </div>
 
-                                <div id="collapse_{{$key}}" class="collapse show"
-                                     aria-labelledby="heading_{{$key}}" data-parent="#accordion_menus">
+                                <div id="collapse_{{$menu_key}}" class="collapse show"
+                                     aria-labelledby="heading_{{$menu_key}}" data-parent="#accordion_menus">
                                     <div class="card-body">
                                         @if(isset($menu['platos']))
                                             <div class="container">
                                                 @foreach($menu['platos'] as $key => $plato)
-                                                    <div class="row border-2 plate" id="{{$key}}">
+                                                    <div class="row border-2 plate" id="{{$key}}" name="mp_{{$plato['menu_plate_id']}}">
                                                         <div class="col-md-3">
                                                             <img class="plate_img" src="{{$plato['url_photo']}}">
                                                         </div>
@@ -76,7 +77,7 @@
                                                             <button class="btn edit_plate" id="plate_{{$key}}">
                                                                 <img src="{{asset('images/edit.png')}}">
                                                             </button>
-                                                            <button class="btn quit_plate" id="plato_{{$key}}">
+                                                            <button class="btn quit_plate" id="mp_{{$plato['menu_plate_id']}}" name="plate_{{$key}}">
                                                                 <img src="{{asset('images/minus.png')}}">
                                                             </button>
                                                         </div>
@@ -96,6 +97,7 @@
             </div>
         </div>
     </div>
+    0
     {{--Modal para crear un menu--}}
     <div class="modal fade" id="newMenu" tabindex="-1" role="dialog" aria-labelledby="newMenulLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -107,13 +109,13 @@
                     <form>
                         <div class="form-group">
                             <label for="cat_name">Nombre:</label>
-                            <input class="form-control" type="text" placeholder="Pon un nombre para la categoria"
+                            <input class="form-control" type="text" placeholder="Pon un nombre al menú"
                                    id="cat_name" name="cat_name">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" name="saveMenu">Guardar</button>
                 </div>
             </div>
         </div>
@@ -261,6 +263,7 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
+                            <input type="text" class="d-none" id="add_plate_menu_id">
                             <ul class="list-group list-group-flush" id="alergenos_list">
                                 @php
                                     $before = "";
@@ -269,13 +272,13 @@
                                         if($plate->plato_id != $before->plato_id){
                                             echo "<li class='list-group-item'>
                                             $plate->plato_name
-                                            <button id=$plate->plato_id' class='btn btn-light'><img src='../images/plus.png'></button>
+                                            <button id='$plate->plato_id' class='add_plate btn btn-dark'><img src='../images/plus.png'></button>
                                         </li>";
                                            }
                                         }else{
                                         echo "<li class='list-group-item'>
                                             $plate->plato_name
-                                            <button id=$plate->plato_id' class='add_plate btn btn-light'><img src='../images/plus.png'></button>
+                                            <button id='$plate->plato_id' class='add_plate btn btn-dark'><img src='../images/plus.png'></button>
                                         </li>";
                                              }
                                                 $before = $plate;

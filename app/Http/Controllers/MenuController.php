@@ -89,7 +89,7 @@ class MenuController extends Controller
             leftJoin('plate as p','mp.plato_id','p.id')->
             rightJoin('menu as m','m.id','mp.menu_id')->
                 leftJoin('foto_plato as fp','fp.plate_id','p.id')->
-            select('m.id as menu_id' ,'m.name as menu_name','p.id as plato_id','p.name as plato_name','p.price','fp.id as id_photo','fp.url')->
+            select('m.id as menu_id' ,'m.name as menu_name','p.id as plato_id','p.name as plato_name','p.price','fp.id as id_photo','fp.url','mp.id as menu_plate_id')->
             where('m.restaurante_id',$slug)->get();
 
             $menus = [];
@@ -98,25 +98,25 @@ class MenuController extends Controller
             $plates = BackMenu::getPlatesFromRestaurant($slug);
             foreach ($result as $item){
                 if(isset($menus[$item->menu_id])){
-                    $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url];
+                    $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
                 }else{
                     $menus[$item->menu_id] = [
                         'nombre' => $item->menu_name,
                         'platos' => []
                     ];
                     if($item->plato_id){
-                        $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url];
+                        $menus[$item->menu_id]['platos'][$item->plato_id] = ['nombre'=>$item->plato_name,'precio' =>$item->price,'photo_id'=>$item->id_photo,'url_photo'=>$item->url,'menu_plate_id' => $item->menu_plate_id];
                     }
                 }
             }
-            return view('menuView',['menus'=> $menus, 'menuplato'=> $menuplato,'plates'=>$plates]);
+            return view('menuView',['restaurant_id'=>$slug,'menus'=> $menus, 'menuplato'=> $menuplato,'plates'=>$plates]);
 
         }
         public function newMenu(Request $request){
                 try{
                     $menu = new Menu();
-                    $menu->name = $request->name;
-                    $menu->restaurante_id = $request->local;
+                    $menu->name = $request->nameMenu;
+                    $menu->restaurante_id = $request->restaurante_id;
                     $menu->save();
                     return response()->json("ok",200);
                 }catch (Exception $e){
@@ -124,6 +124,7 @@ class MenuController extends Controller
                 }
 
         }
+
         public function editMenu(Request $request){
             try{
                 Menu::where('id',$request->id)->update(['name'=>$request->name]);
@@ -135,8 +136,12 @@ class MenuController extends Controller
 
         public function quitPlatefromMenu(Request $request){
             try{
-                $borrados = DB::table('menu_platos')->where('menu_id',$request->menu_id)->where('plato_id',$request->plate_id)->delete();
-                return response()->json($borrados,200);
+                $borrados = DB::table('menu_platos')->where('id',$request->id)->delete();
+                if($borrados >0){
+                    return response()->json("ok",200);
+                }else{
+                    return response()->json("ok, no changes",200);
+                }
             }catch(\Exception $e){
                 return response()->json($e->getMessage(),500);
             }
@@ -147,11 +152,23 @@ class MenuController extends Controller
                 $menus = DB::table('menu_platos as mp')->
                 join('menu as m','mp.menu_id','m.id')->
                     where('plato_id',$r->id)->
-                select('m.id','m.name')->
+                select('mp.id as id_menu_plato','m.id','m.name')->
                 get();
                 return response()->json($menus,200);
             }catch (\Exception $e){
                 return response()->json($e->getMessage(),200);
+            }
+        }
+        public function dropMenu(Request $r){
+            try{
+               $rows=  DB::table('menu')->where('id',$r->id)->delete();
+                if($rows >0){
+                    return response()->json("ok",200);
+                }else{
+                    return response()->json("ok, no changes",200);
+                }
+            }catch (\Exception $e){
+                return response()->json($e->getMessage(),500);
             }
         }
 

@@ -52,23 +52,30 @@ Route::get('adminplato', 'AdminPlatosController@showPlate');
 
 Route::get('menus/{restaurante}','MenuController@index');
 
+//ACTIONS IN MENU VIEW
 Route::middleware('auth')->prefix('menus')->group(function () {
     Route::get('{restaurante}','MenuController@index')->name('view_menu');
     Route::post('menu_do/newMenu','MenuController@newMenu');
     Route::post('menus_do/getMenus','MenuController@getMenusAssign');
+    Route::post('menus_do/dropMenu','MenuController@dropMenu');
+    Route::post('menus_do/dropPlateToMenu','MenuController@quitPlatefromMenu');
+    Route::post('menus_do/add_plate_tomenu','PlateController@addPlateIntoMenu');
+    Route::post('menus_do/editmenu','MenuController@editMenu');
 
 });
-//VISTA PLATOS
+
+//PLATES VIEW
 Route::middleware('auth')->prefix('platos')->group(function(){
     Route::get('{id}',"showPlateController@index");
 
 });
 
-//ACTIONS VISTA MENUS
+//ACTIONS MODAL EDITAR PLATO IN MENU VIEW
 Route::middleware('auth')->prefix('menus/platos_do')->group(function(){
     Route::get('menus', "PlateController@getMenu");
     Route::get('alergenos',"PlateController@getAlergenos");
     Route::post('save',"PlateController@savePlate");
+    Route::post('dropAlergen',"PlateController@dropAlergen");
     //Route::post('set_alergenos',"showPlateController@index");
 });
 

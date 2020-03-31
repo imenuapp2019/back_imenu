@@ -17,10 +17,15 @@ public static function getPlatesFromRestaurant($id){
     rightJoin('menu as m','m.id','mp.menu_id')->
     leftJoin('foto_plato as fp','fp.plate_id','p.id')->
     select('m.id as menu_id' ,'m.name as menu_name','p.id as plato_id','p.name as plato_name','p.price','fp.id as id_photo','fp.url')->
-        distinct()->
     where('m.restaurante_id',$id)->get();
-    if(!is_null($result)){
-        return $result;
+    $newResult = array();
+    foreach ($result as $res){
+        if(!is_null($res->plato_id) && !is_null($res->plato_name)){
+            array_push($newResult,$res);
+        }
+    }
+    if(!is_null($newResult)){
+        return $newResult;
     }else{
         return "";
     }
