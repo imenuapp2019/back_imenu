@@ -140,7 +140,7 @@ class RestauranteController extends Controller
         $foodtype = Tipo::all();
         $images = ImagenRestaurante::all()
             ->where('restaurante_id', $id);
-        return redirect()->route('update', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true, 'images'=>$images]);
+        return redirect()->route('editar_restaurante', ['restaurants'=>$restaurante, 'type'=>$foodtype, 'change'=>true, 'images'=>$images]);
     }
 
     public function home(){

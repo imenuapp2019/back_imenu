@@ -43,12 +43,13 @@ Route::middleware('auth')->prefix('restaurantes')->group(function () {
 //Ruta Web para crear un restaurante
     Route::get('createRestaurante', 'ControllerFormularioResrtaurante@callController')->name('create_restaurante');
 });
+
 // Vista usuarios
 Route::get('usuarios/read/{id}', 'showUser@showUser');
 
 
 // Vista panel del plato
-Route::get('adminplato', 'AdminPlatosController@showPlate');
+//Route::get('adminplato', 'AdminPlatosController@showPlate');
 
 Route::get('menus/{restaurante}','MenuController@index');
 
